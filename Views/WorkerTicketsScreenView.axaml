@@ -1,0 +1,81 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DiplomHelpDeskOka.Views.WorkerTicketsScreenView"
+             xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
+             x:DataType="vm:WorkerTicketsScreenViewModel">
+    <Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="200, *">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="White" Height="70" Padding="20,10">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <Image Source="/Assets/Image.png" Height="40"/>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#C9A86A" Height="60" Padding="20,0">
+            <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="Меню" VerticalAlignment="Center"
+                           Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="1" Text="Заявки отдела" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" Foreground="White" FontSize="18" FontWeight="Bold"/>
+            </Grid>
+        </Border>
+        <Border Grid.Row="2" Grid.Column="0" Background="#F1EFEA" Padding="10">
+            <StackPanel Spacing="10">
+                <Border Background="Transparent" Padding="10"
+                        BorderBrush="#C9A86A" BorderThickness="3,0,0,0">
+                    <Button Content="Заявки" Height="40" Width="160"
+                            HorizontalAlignment="Left" HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center" Background="Transparent"/>
+                </Border>
+            </StackPanel>
+        </Border>
+        <Grid Grid.Row="2" Grid.Column="1" RowDefinitions="Auto, *">
+            <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto, Auto, Auto, Auto, Auto" Margin="10">
+                <TextBox Grid.Column="0" Height="38" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Watermark="Поиск по названию / описанию"/>
+                <ComboBox Grid.Column="1" Width="120" Height="38" Margin="0,0,10,0"
+                          ItemsSource="{Binding Statuses}" SelectedItem="{Binding SelectedStatus}" PlaceholderText="Статус"
+                          DisplayMemberBinding="{Binding Name}"/>
+                <ComboBox Grid.Column="2" Width="120" Height="38" Margin="0,0,10,0"
+                          ItemsSource="{Binding Priorities}" SelectedItem="{Binding SelectedPriority}" PlaceholderText="Приоритет"
+                          DisplayMemberBinding="{Binding Name}"/>
+                <ComboBox Grid.Column="3" Width="140" Height="38" Margin="0,0,10,0"
+                          ItemsSource="{Binding Types}" SelectedItem="{Binding SelectedType}" PlaceholderText="Тип"
+                          DisplayMemberBinding="{Binding Name}"/>
+                <ComboBox Grid.Column="4" Width="140" Height="38" Margin="0,0,10,0"
+                          ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}" PlaceholderText="Отдел"
+                          DisplayMemberBinding="{Binding Name}"/>
+                <Button Grid.Column="5" Height="38" Content="Сбросить фильтры" Background="#D4B36A" Foreground="White"
+                        Command="{Binding ResetFiltersCommand}" Margin="0,0,10,0"/>
+                <Button Grid.Column="6" Height="38" Width="42" Background="#4CAF50" Foreground="White"
+                        FontSize="22" FontWeight="Bold" Content="+" Command="{Binding CreateTicketCommand}"/>
+            </Grid>
+            <DataGrid Grid.Row="1" ItemsSource="{Binding Tickets}" AutoGenerateColumns="False"
+                      IsReadOnly="True" CanUserResizeColumns="True" CanUserSortColumns="True"
+                      Background="#F8F7F5" Margin="10,0,10,10">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" />
+                    <DataGridTextColumn Header="Тип" Binding="{Binding TicketType.Name}" Width="120" />
+                    <DataGridTextColumn Header="Статус" Binding="{Binding Status.Name}" Width="100" />
+                    <DataGridTextColumn Header="Приоритет" Binding="{Binding Priority.Name}" Width="100" />
+                    <DataGridTextColumn Header="Отдел" Binding="{Binding Department.Name}" Width="120" />
+                    <DataGridTextColumn Header="Автор" Binding="{Binding Author.ShortName}" Width="150" />
+                    <DataGridTemplateColumn Header="Действия" Width="80">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="✏️" ToolTip.Tip="Редактировать"
+                                        Command="{Binding $parent[DataGrid].DataContext.EditTicketCommand}"
+                                        CommandParameter="{Binding}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

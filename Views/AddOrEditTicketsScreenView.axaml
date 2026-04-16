@@ -1,0 +1,240 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DiplomHelpDeskOka.Views.AddOrEditTicketsScreenView"
+
+             xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
+             x:DataType="vm:AddOrEditTicketsScreenViewModel">
+
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="200,*">
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2"
+                Background="White" Height="70" Padding="20,10">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <Image Source="/Assets/Image.png" Height="40"/>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- TITLE -->
+        <Border Grid.Row="1" Grid.ColumnSpan="2"
+                Background="#C9A86A" Height="60" Padding="20,0">
+            <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="Меню"
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           FontSize="16"
+                           FontWeight="SemiBold"/>
+
+                <TextBlock Grid.Column="1"
+                           Text="{Binding Title}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           FontSize="18"
+                           FontWeight="Bold"/>
+            </Grid>
+        </Border>
+
+        <!-- SIDEBAR -->
+        <Border Grid.Row="2" Grid.Column="0"
+                Background="#F1EFEA"
+                Padding="10">
+
+            <StackPanel Spacing="10">
+
+                <Button Content="Главная"
+                        Height="40" Width="160"
+                        HorizontalContentAlignment="Left"
+                        Background="Transparent"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding GoToMainScreenCommand}"/>
+
+                <Button Content="Пользователи"
+                        Height="40" Width="160"
+                        HorizontalContentAlignment="Left"
+                        Background="Transparent"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding GoToUsersScreenCommand}"/>
+
+                <Border BorderBrush="#C9A86A" BorderThickness="3,0,0,0" Padding="5">
+                    <Button Content="Заявки"
+                            Height="40" Width="160"
+                            HorizontalContentAlignment="Left"
+                            Background="Transparent"
+                            VerticalContentAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Border>
+
+        <!-- MAIN -->
+        <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,350">
+
+            <!-- LEFT -->
+            <ScrollViewer Grid.Column="0">
+                <StackPanel Margin="30" Spacing="15">
+
+                    <!-- Автор -->
+                    <TextBlock Text="Автор"/>
+                    <TextBox Text="{Binding AuthorName}"
+                             IsReadOnly="True"
+                             Background="#EDEDED"
+                             CornerRadius="10"/>
+
+                    <!-- Название -->
+                    <TextBlock Text="Название заявки"/>
+                    <TextBox Text="{Binding TicketTitle}" CornerRadius="10"/>
+
+                    <!-- Описание -->
+                    <TextBlock Text="Описание"/>
+                    <TextBox Text="{Binding Description}"
+                             AcceptsReturn="True"
+                             Height="120"
+                             CornerRadius="10"/>
+
+                    <!-- Тип -->
+                    <TextBlock Text="Тип заявки"/>
+                    <ComboBox ItemsSource="{Binding TicketTypes}"
+                              SelectedItem="{Binding SelectedType}"
+                              DisplayMemberBinding="{Binding Name}"/>
+
+                    <!-- Отдел -->
+                    <TextBlock Text="Отдел"/>
+                    <ComboBox ItemsSource="{Binding Departments}"
+                              SelectedItem="{Binding SelectedDepartment}"
+                              DisplayMemberBinding="{Binding Name}"/>
+
+                    <!-- Комментарии -->
+                    <TextBlock Text="Комментарии" Margin="0,10,0,0"/>
+
+                    <ItemsControl ItemsSource="{Binding Comments}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#EDEDED"
+                                        CornerRadius="10"
+                                        Padding="10"
+                                        Margin="0,5">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold">
+                                            <Run Text="{Binding User.ShortName}"/>
+                                            <Run Text=" ("/>
+                                            <Run Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM HH:mm}'}"/>
+                                            <Run Text=")"/>
+                                        </TextBlock>
+
+                                        <TextBlock Text="{Binding Text}"
+                                                   TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <TextBox Text="{Binding NewCommentText}"
+                             Watermark="Введите комментарий..."
+                             AcceptsReturn="True"
+                             Height="60"/>
+
+                    <Button Content="Отправить"
+                            Command="{Binding AddCommentCommand}"
+                            HorizontalAlignment="Right"/>
+
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- RIGHT -->
+            <Border Grid.Column="1"
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1,0,0,0">
+
+                <StackPanel Margin="20" Spacing="15">
+
+                    <!-- ДАТЫ -->
+                    <TextBlock Text="Создана"/>
+                    <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
+
+                   <!-- 🔥 ИЗМЕНЕНИЕ: Вместо полей ввода просто показываем дату закрытия -->
+                   <TextBlock Text="Закрыта" Margin="0,10,0,0"/>
+                   <TextBlock Text="{Binding ClosedAtDisplay}" 
+                              FontSize="14" 
+                              Foreground="Gray" 
+                              Margin="0,5,0,0"/>
+
+                    <!-- Ответственный -->
+                    <TextBlock Text="Ответственный"/>
+                    <ComboBox ItemsSource="{Binding ResponsibleUsers}"
+                              SelectedItem="{Binding SelectedResponsibleUser}"
+                              DisplayMemberBinding="{Binding FullName}"
+                              HorizontalContentAlignment="Stretch"/>
+
+                    <!-- Статус -->
+                    <TextBlock Text="Статус"/>
+                    <ComboBox ItemsSource="{Binding Statuses}"
+                              SelectedItem="{Binding SelectedStatus}"
+                              DisplayMemberBinding="{Binding Name}"/>
+
+                    <!-- План -->
+                    <TextBlock Text="Планируемое время решения"/>
+                    <StackPanel Spacing="5">
+                        <DatePicker SelectedDate="{Binding PlannedDate}"/>
+                        <TimePicker SelectedTime="{Binding PlannedTime}"/>
+                    </StackPanel>
+
+                    <!-- Приоритет -->
+                    <TextBlock Text="Приоритет"/>
+                    <ComboBox ItemsSource="{Binding Priorities}"
+                              SelectedItem="{Binding SelectedPriority}"
+                              DisplayMemberBinding="{Binding Name}"/>
+
+                    <!-- КНОПКИ -->
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="10"
+                                Margin="0,20,0,0"
+                                HorizontalAlignment="Center">
+                        <Button Content="Отмена"
+                                Width="100"
+                                Height="50"
+                                CornerRadius="10"
+                                Command="{Binding CancelCommand}"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"/>
+
+                        <Button Content="{Binding SaveButtonText}"
+                                Width="100"
+                                Height="50"
+                                Background="#C9A86A"
+                                Foreground="White"
+                                CornerRadius="10"
+                                Command="{Binding SaveCommand}"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <!-- DELETE -->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,100,0,0">
+                        <Button Width="100"
+                                Height="50"
+                                Background="#E74C3C"
+                                CornerRadius="10"
+                                Command="{Binding DeleteCommand}"
+                                Content="🗑 Удалить"
+                                Foreground="White"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                HorizontalContentAlignment="Center"
+                                VerticalContentAlignment="Center">
+                            
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl> 

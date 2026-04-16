@@ -1,0 +1,130 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DiplomHelpDeskOka.Views.UserAddOrEditTicketsScreenView"
+             xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
+             x:DataType="vm:UserAddOrEditTicketsScreenViewModel">
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="200,*">
+        <!-- Header -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="White" Height="70" Padding="20,10">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <Image Source="/Assets/Image.png" Height="40"/>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <!-- Title -->
+        <Border Grid.Row="1" Grid.ColumnSpan="2" Background="#C9A86A" Height="60" Padding="20,0">
+            <Grid ColumnDefinitions="200, *">
+                <TextBlock Grid.Column="0" Text="Меню" VerticalAlignment="Center"
+                           Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="1" Text="{Binding Title}" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" Foreground="White" FontSize="18" FontWeight="Bold"/>
+            </Grid>
+        </Border>
+        <!-- Sidebar -->
+        <Border Grid.Row="2" Grid.Column="0" Background="#F1EFEA" Padding="10">
+            <StackPanel Spacing="10">
+                <Border BorderBrush="#C9A86A" BorderThickness="3,0,0,0" Padding="5">
+                    <Button Content="Заявки" Height="40" Width="160"
+                            HorizontalContentAlignment="Left" Background="Transparent"/>
+                </Border>
+            </StackPanel>
+        </Border>
+        <!-- Main -->
+        <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,350">
+            <ScrollViewer Grid.Column="0">
+                <StackPanel Margin="30" Spacing="15">
+                    <TextBlock Text="Автор"/>
+                    <TextBox Text="{Binding AuthorName}" IsReadOnly="True" Background="#EDEDED" CornerRadius="10"/>
+                    
+                    <TextBlock Text="Название заявки"/>
+                    <TextBox Text="{Binding TicketTitle}" CornerRadius="10" IsEnabled="{Binding IsTitleEnabled}"/>
+                    
+                    <TextBlock Text="Описание"/>
+                    <TextBox Text="{Binding Description}" AcceptsReturn="True" Height="120" CornerRadius="10"
+                             IsEnabled="{Binding IsDescriptionEnabled}"/>
+                    
+                    <TextBlock Text="Тип заявки"/>
+                    <ComboBox ItemsSource="{Binding TicketTypes}" SelectedItem="{Binding SelectedType}"
+                              DisplayMemberBinding="{Binding Name}"
+                              IsEnabled="{Binding IsTypeEnabled}"/>
+                    
+                    <TextBlock Text="Отдел"/>
+                    <ComboBox ItemsSource="{Binding Departments}" SelectedItem="{Binding SelectedDepartment}"
+                              DisplayMemberBinding="{Binding Name}"
+                              IsEnabled="{Binding IsDepartmentEnabled}"/>
+                    
+                    <TextBlock Text="Комментарии" Margin="0,10,0,0"/>
+                    <ItemsControl ItemsSource="{Binding Comments}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#EDEDED" CornerRadius="10" Padding="10" Margin="0,5">
+                                    <StackPanel>
+                                        <TextBlock FontWeight="Bold">
+                                            <Run Text="{Binding User.ShortName}"/>
+                                            <Run Text=" ("/>
+                                            <Run Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM HH:mm}'}"/>
+                                            <Run Text=")"/>
+                                        </TextBlock>
+                                        <TextBlock Text="{Binding Text}" TextWrapping="Wrap"/>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
+                    <TextBox Text="{Binding NewCommentText}" Watermark="Введите комментарий..."
+                             AcceptsReturn="True" Height="60"/>
+                    <Button Content="Отправить" Command="{Binding AddCommentCommand}" HorizontalAlignment="Right"/>
+                </StackPanel>
+            </ScrollViewer>
+            
+            <Border Grid.Column="1" BorderBrush="#CCCCCC" BorderThickness="1,0,0,0">
+                <StackPanel Margin="20" Spacing="15">
+                    <TextBlock Text="Создана"/>
+                    <TextBlock Text="{Binding CreatedAt, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
+                    
+                    <TextBlock Text="Закрыта" Margin="0,10,0,0"/>
+                    <TextBlock Text="{Binding ClosedAtDisplay}" FontSize="14" Foreground="Gray"/>
+                    
+                    <TextBlock Text="Ответственный"/>
+                    <ComboBox ItemsSource="{Binding ResponsibleUsers}" 
+                              SelectedItem="{Binding SelectedResponsibleUser}"
+                              DisplayMemberBinding="{Binding FullName}"
+                              IsEnabled="{Binding IsResponsibleUserEnabled}"/>
+                    
+                    <TextBlock Text="Статус"/>
+                    <ComboBox ItemsSource="{Binding Statuses}" 
+                              SelectedItem="{Binding SelectedStatus}"
+                              IsEnabled="{Binding IsStatusEnabled}"
+                              DisplayMemberBinding="{Binding Name}"/>
+                    
+                    <TextBlock Text="Планируемое время решения"/>
+                    <StackPanel Spacing="5">
+                        <DatePicker SelectedDate="{Binding PlannedDate}" IsEnabled="{Binding IsPlannedDateEnabled}"/>
+                        <TimePicker SelectedTime="{Binding PlannedTime}" IsEnabled="{Binding IsPlannedDateEnabled}"/>
+                    </StackPanel>
+                    
+                    <TextBlock Text="Приоритет"/>
+                    <ComboBox ItemsSource="{Binding Priorities}" 
+                              SelectedItem="{Binding SelectedPriority}"
+                              IsEnabled="{Binding IsPriorityEnabled}"
+                              DisplayMemberBinding="{Binding Name}"/>
+                    
+                    <StackPanel Orientation="Horizontal" Spacing="10" Margin="0,20,0,0" HorizontalAlignment="Center">
+                        <Button Content="Отмена" Width="100" Height="50" CornerRadius="10"
+                                Command="{Binding CancelCommand}"/>
+                        <Button Content="{Binding SaveButtonText}" Width="100" Height="50"
+                                Background="#C9A86A" Foreground="White" CornerRadius="10"
+                                Command="{Binding SaveCommand}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

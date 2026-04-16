@@ -1,0 +1,190 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DiplomHelpDeskOka.Views.AddOrEditUserScreenView"
+
+             xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
+             x:DataType="vm:AddOrEditUserScreenViewModel">
+     <Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="200, *">
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2"
+                Background="White" Height="70" Padding="20,10">
+            <Grid ColumnDefinitions="Auto, *, Auto">
+                <Image Source="/Assets/Image.png" Height="40"/>
+                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+       <!-- TITLE -->
+        <Border Grid.Row="1" Grid.ColumnSpan="2"
+                Background="#C9A86A" Height="60" Padding="20,0">
+
+            <Grid ColumnDefinitions="200,*">                
+                <!-- Меню -->
+                <TextBlock Grid.Column="0" Text="Меню"
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           FontSize="16"
+                           FontWeight="SemiBold"/>
+
+                <!-- Заголовок (Название страницы) -->
+                <TextBlock Grid.Column="1"
+                           Text="{Binding Title}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Foreground="White"
+                           FontSize="18"
+                           FontWeight="Bold"/>
+            </Grid>
+        </Border>
+
+         <!-- 📚 SIDEBAR -->
+        <Border Grid.Row="2"
+                Grid.Column="0"
+                Background="#F1EFEA"
+                Padding="10">
+
+            <StackPanel Spacing="10">
+
+                <Button Content="Главная" 
+                            Height="40"
+                            Width="160"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            Background="Transparent"
+                            Command="{Binding GoToMainScreenCommand}"/>
+
+                <Border Background="Transparent"
+                        Padding="10"
+                        BorderBrush="#C9A86A"
+                        BorderThickness="3,0,0,0">
+                    
+                    <Button Content="Пользователи" 
+                            Height="40"
+                            Width="160"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            Background="Transparent"/>
+                </Border>
+
+                <!-- 🔥 ДОБАВЛЕНА КОМАНДА -->
+                <Button Content="Заявки" 
+                            Height="40"
+                            Width="160"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Left"
+                            VerticalContentAlignment="Center"
+                            Background="Transparent"
+                            Command="{Binding GoToTicketsScreenCommand}"/>
+
+            </StackPanel>
+        </Border>
+
+        <!-- CONTENT -->
+        <StackPanel Grid.Row="2" Grid.Column="1" Margin="40" Spacing="20">
+
+          <!-- Личные данные -->
+                <Border Padding="20" Background="#F8F7F5" CornerRadius="10">
+                    <StackPanel Spacing="10">
+                        <TextBlock Text="Личные данные" FontSize="16"/>
+                        <TextBox Watermark="Имя" Text="{Binding Name}"/>
+                        <TextBox Watermark="Фамилия" Text="{Binding Surname}"/>
+                        <TextBox Watermark="Отчество" Text="{Binding Patronymic}"/>
+                        <TextBox Watermark="Телефон" Text="{Binding Phone}"/> <!-- 🔥 ДОБАВЛЕН ТЕЛЕФОН -->
+                        <TextBox Watermark="Email" Text="{Binding Email}"/>
+
+                        <!-- Отдел с кнопкой "+" -->
+                        <Grid ColumnDefinitions="*, Auto">
+                            <ComboBox Grid.Column="0"
+                                      ItemsSource="{Binding Departments}"
+                                      SelectedItem="{Binding SelectedDepartment}"
+                                      PlaceholderText="Выберите отдел">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Grid.Column="1" Content="+" Width="30" Margin="10,0,0,0"
+                                    ToolTip.Tip="Добавить новый отдел"
+                                    Command="{Binding AddDepartmentCommand}"/>
+                        </Grid>
+
+                        <!-- Должность с кнопкой "+" -->
+                        <Grid ColumnDefinitions="*, Auto">
+                            <ComboBox Grid.Column="0"
+                                      ItemsSource="{Binding Positions}"
+                                      SelectedItem="{Binding SelectedPosition}"
+                                      PlaceholderText="Выберите должность">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button Grid.Column="1" Content="+" Width="30" Margin="10,0,0,0"
+                                    ToolTip.Tip="Добавить новую должность"
+                                    Command="{Binding AddPositionCommand}"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+            <!-- УЧЕТКА -->
+            <Border Padding="20" Background="#F8F7F5" CornerRadius="10">
+                <StackPanel Spacing="10">
+
+                    <TextBlock Text="Учётная запись" FontSize="16"/>
+
+                    <TextBox Watermark="Логин" Text="{Binding Login}"/>
+
+                   <TextBox Watermark="Новый пароль (оставьте пустым чтобы не менять)"
+                            Text="{Binding Password}"/>
+
+                    <ComboBox ItemsSource="{Binding Roles}"
+                              SelectedItem="{Binding SelectedRole}"
+                              Width="200"
+                              PlaceholderText="Выберите роль">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                </StackPanel>
+            </Border>
+
+            <!-- КНОПКИ -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="20">
+
+                <Button Content="Отмена"
+                        Width="120"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding CancelCommand}"/>
+
+                <Button Content="{Binding SaveButtonText}"
+                        Width="150"
+                        Background="#C9A86A"
+                        Foreground="White"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        Command="{Binding SaveCommand}"/>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+</UserControl>

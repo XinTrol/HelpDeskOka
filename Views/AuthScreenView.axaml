@@ -1,0 +1,80 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="DiplomHelpDeskOka.Views.AuthScreenView"
+
+             xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels" 
+             x:DataType="vm:AuthScreenViewModel">
+             <!-- Дописал самостоятельно последние 2 строчки -->
+
+             <StackPanel HorizontalAlignment="Center" 
+                         VerticalAlignment="Center">
+
+                
+                 <Image Source="/Assets/Image.png" 
+                        Height="100"
+                        Margin="0,0,0,10"/>
+
+                  <TextBlock Text="СИСТЕМА УПРАВЛЕНИЯ ЗАЯВКАМИ"
+                             HorizontalAlignment="Center"
+                             Margin="0,0,0,20"
+                             Foreground="#C9A86A"
+                             FontSize="18"
+                             FontWeight="Bold"/>
+
+                 <TextBox Watermark="Логин"
+                          CornerRadius="10"
+                          Margin="0,0,0,10"
+                          Width="250"
+                          Height="40"
+                          VerticalContentAlignment="Center"
+                          HorizontalContentAlignment="Left"
+                          BorderBrush="#C9A86A"
+                          BorderThickness="2"
+                          Text="{Binding Login}"/>
+
+                  <TextBox Watermark="Пароль"
+                          CornerRadius="10"
+                          Margin="0,0,0,20"
+                          PasswordChar="*"
+                          Width="250"
+                          Height="40"
+                          VerticalContentAlignment="Center"
+                          HorizontalContentAlignment="Left"
+                          BorderBrush="#C9A86A"
+                          BorderThickness="2"
+                          Text="{Binding Password}"/>
+
+                 <Button Content="Войти"
+                         Width="120"
+                         Padding="10,8"
+                         CornerRadius="30"
+                         Background="#C9A86A"
+                         Foreground="White"
+                         Cursor="Hand"
+                         Command="{Binding EnterCommand}"
+                         HorizontalAlignment="Center"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center">
+                     <Button.Styles>
+                         <Style Selector="Button:pointerover">
+                             <Setter Property="Background" Value="#DAB97A"/>
+                         </Style>
+                         <Style Selector="Button:pressed">
+                             <Setter Property="Background" Value="#B08F4A"/>
+                         </Style>
+                     </Button.Styles>
+                 </Button>
+
+                 <TextBlock Text="{Binding Message}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Foreground="#C9A86A"
+                          FontSize="15"/>
+				 
+             </StackPanel>
+
+
+</UserControl>
