@@ -38,16 +38,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\AddOrEditUserScreenView.axaml.cs">
+    <Compile Update="Views\Admin\AddOrEditUserScreenView.axaml.cs">
       <DependentUpon>AddOrEditUserScreenView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\AdminTicketsScreenView.axaml.cs">
+    <Compile Update="Views\Admin\AdminTicketsScreenView.axaml.cs">
       <DependentUpon>AdminTicketsScreenView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\UserAddOrEditTicketsScreenView.axaml.cs">
+    <Compile Update="Views\Intern\UserAddOrEditTicketsScreenView.axaml.cs">
       <DependentUpon>UserAddOrEditTicketsScreenView.axaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\WorkerAddOrEditTicketsScreenView.axaml.cs">
+    <Compile Update="Views\Worker\WorkerAddOrEditTicketsScreenView.axaml.cs">
       <DependentUpon>WorkerAddOrEditTicketsScreenView.axaml</DependentUpon>
     </Compile>
   </ItemGroup>

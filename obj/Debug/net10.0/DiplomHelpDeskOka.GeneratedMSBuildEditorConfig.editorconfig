@@ -34,35 +34,35 @@ build_property.EnableCodeStyleSeverity =
 [C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/AddOrEditTicketsScreenView.axaml]
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AddOrEditTicketsScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/AddOrEditUserScreenView.axaml]
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AddOrEditUserScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/AdminMainScreenView.axaml]
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AdminMainScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/AdminTicketsScreenView.axaml]
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AdminTicketsScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/AdminUsersScreenView.axaml]
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AdminUsersScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
 [C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/AuthScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Intern/UserAddOrEditTicketsScreenView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Intern/UserTicketsScreenView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/UserAddOrEditTicketsScreenView.axaml]
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Worker/WorkerAddOrEditTicketsScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/UserTicketsScreenView.axaml]
-build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
-
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/WorkerAddOrEditTicketsScreenView.axaml]
-build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
-
-[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/WorkerTicketsScreenView.axaml]
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Worker/WorkerTicketsScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

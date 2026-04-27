@@ -54,4 +54,12 @@ public partial class User
     {
         return string.IsNullOrEmpty(name) ? "" : name[0].ToString().ToUpper();
     }
+
+    public string DepartmentName => Department?.Name ?? string.Empty;
+
+    public string PositionName => Position?.Name ?? string.Empty;
+
+    public string RoleName => Role?.Name ?? string.Empty;
+
+    public string StatusText => IsDeleted ? "Заблокирован" : "Активен";
 }

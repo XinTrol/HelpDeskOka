@@ -18,5 +18,6 @@
         <con:InverseBoolConverter x:Key="InverseBoolConverter"/>
         <con:BoolToStatusTextConverter x:Key="BoolToStatusText"/>
         <con:BoolToStatusColorConverter x:Key="BoolToStatusColor"/>
+        <con:ToggleBrushConverter x:Key="ToggleBrush"/>
     </Application.Resources>
 </Application>

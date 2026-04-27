@@ -32,6 +32,13 @@ namespace DiplomHelpDeskOka.ViewModels
         [ObservableProperty]
         private int _selectedFilterIndex = 0;
 
+        [RelayCommand]
+        private void Logout()
+        {
+            MainWindowViewModel.Instance.CurrentViewModel =
+                new AuthScreenViewModel(); // или твоя LoginScreenViewModel
+        }
+
         private DateTime _currentFilterStartDate;
 
         [ObservableProperty]

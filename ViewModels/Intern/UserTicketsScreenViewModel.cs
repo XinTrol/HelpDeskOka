@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DiplomHelpDeskOka.ViewModels
 {
-    public partial class WorkerTicketsScreenViewModel : ViewModelBase
+    public partial class UserTicketsScreenViewModel : ViewModelBase
     {
         [ObservableProperty] private User _currentUser;
 
@@ -29,10 +29,17 @@ namespace DiplomHelpDeskOka.ViewModels
 
         private bool _isResetting;
 
-        public WorkerTicketsScreenViewModel(User currentUser)
+        public UserTicketsScreenViewModel(User currentUser)
         {
             CurrentUser = currentUser;
             _ = LoadData();
+        }
+
+        [RelayCommand]
+        private void Logout()
+        {
+            MainWindowViewModel.Instance.CurrentViewModel =
+                new AuthScreenViewModel(); // или твоя LoginScreenViewModel
         }
 
         private async Task LoadData()
@@ -87,7 +94,7 @@ namespace DiplomHelpDeskOka.ViewModels
                 .Include(t => t.TicketType)
                 .Include(t => t.Department)
                 .Include(t => t.Author)
-                .Where(t => t.DepartmentId == CurrentUser.DepartmentId) // Только заявки своего отдела
+                .Where(t => t.AuthorId == CurrentUser.Id) // Только свои заявки
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(SearchText))
@@ -130,14 +137,15 @@ namespace DiplomHelpDeskOka.ViewModels
         [RelayCommand]
         private void CreateTicket()
         {
-            MainWindowViewModel.Instance.CurrentViewModel = new WorkerAddOrEditTicketsScreenViewModel(CurrentUser);
+            MainWindowViewModel.Instance.CurrentViewModel = new UserAddOrEditTicketsScreenViewModel(CurrentUser);
         }
 
         [RelayCommand]
         private void EditTicket(Ticket ticket)
         {
             if (ticket == null) return;
-            MainWindowViewModel.Instance.CurrentViewModel = new WorkerAddOrEditTicketsScreenViewModel(CurrentUser, ticket.Id);
+            MainWindowViewModel.Instance.CurrentViewModel = new UserAddOrEditTicketsScreenViewModel(CurrentUser, ticket.Id);
         }
+
     }
 }

@@ -15,10 +15,23 @@
                 Background="White" Height="70" Padding="20,10">
             <Grid ColumnDefinitions="Auto, *, Auto">
                 <Image Source="/Assets/Image.png" Height="40"/>
-                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
-                    <TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
-                </StackPanel>
+                <StackPanel Grid.Column="2"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							Orientation="Horizontal"
+							Spacing="10">
+
+					<StackPanel>
+						<TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
+						<TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
+					</StackPanel>
+
+					<Button Content="Выйти"
+							Command="{Binding LogoutCommand}"
+							Background="#D9534F"
+							Foreground="White"
+							Padding="10,5"/>
+				</StackPanel>
             </Grid>
         </Border>
 
@@ -86,6 +99,7 @@
                 <TextBox Grid.Column="0" 
                          Height="38"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         VerticalContentAlignment="Center"
                          Watermark="Поиск по ФИО, email, логину" 
                          Margin="0,0,10,0"/>
                 
@@ -133,7 +147,6 @@
                         VerticalContentAlignment="Center"/>
             </Grid>
 
-            <!-- DataGrid -->
             <DataGrid Grid.Row="1" 
                       ItemsSource="{Binding AllUsers}"
                       AutoGenerateColumns="False" 
@@ -142,52 +155,92 @@
                       CanUserSortColumns="True"
                       Background="#F8F7F5" 
                       Margin="10,0,10,10">
+            
+                <DataGrid.Styles>
+            
+                    <!-- Заголовки -->
+                    <Style Selector="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+            
+                    <!-- Ячейки -->
+                    <Style Selector="DataGridCell">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+            
+                </DataGrid.Styles>
+            
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ФИО" Binding="{Binding FullName}" Width="*" />
-                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="150" />
-                    <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="100" />
-                    <DataGridTextColumn Header="Отдел" Binding="{Binding Department.Name}" Width="120" />
-                    <DataGridTextColumn Header="Должность" Binding="{Binding Position.Name}" Width="120" />
-                    <DataGridTextColumn Header="Роль" Binding="{Binding Role.Name}" Width="100" />
-
-                    <DataGridTemplateColumn Header="Статус" Width="80">
+            
+                    <!-- 👇 растягивается -->
+                    <DataGridTextColumn Header="ФИО"
+                                        Binding="{Binding FullName}"
+                                        Width="2*"/>
+            
+                    <DataGridTextColumn Header="Email"
+                                        Binding="{Binding Email}"
+                                        Width="2*"/>
+            
+                    <DataGridTextColumn Header="Логин"
+                                        Binding="{Binding Login}"
+                                        Width="*"/>
+            
+                    <DataGridTextColumn Header="Отдел"
+                                        Binding="{Binding DepartmentName}"
+                                        Width="*"/>
+            
+                    <DataGridTextColumn Header="Должность"
+                                        Binding="{Binding PositionName}"
+                                        Width="*"/>
+            
+                    <DataGridTextColumn Header="Роль"
+                                        Binding="{Binding RoleName}"
+                                        Width="*"/>
+            
+                    <!-- 👇 статус (оставляем Template из-за цвета) -->
+                    <DataGridTemplateColumn Header="Статус" Width="*">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding IsDeleted, Converter={StaticResource BoolToStatusText}}"
-                                           Foreground="{Binding IsDeleted, Converter={StaticResource BoolToStatusColor}}"/>
+                                <TextBlock Text="{Binding StatusText}"
+                                           Foreground="{Binding IsDeleted, Converter={StaticResource BoolToStatusColor}}"
+                                           HorizontalAlignment="Center"
+                                           TextAlignment="Center"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
-                   <DataGridTemplateColumn Header="Действия" Width="160">
+            
+                    <!-- 👇 действия фикс ширины -->
+                    <DataGridTemplateColumn Header="Действия" Width="160">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Spacing="5">
-                                    
-                                    <!-- Редактировать -->
-                                    <Button Content="✏️" Margin="2,0"
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            Spacing="5">
+            
+                                    <Button Content="✏️"
                                             ToolTip.Tip="Редактировать"
                                             Command="{Binding $parent[DataGrid].DataContext.EditUserCommand}"
                                             CommandParameter="{Binding}"/>
-                   
-                                    <!-- 🔥 Заблокировать (используем InverseBoolConverter) -->
-                                    <Button Content="🔒" Margin="2,0"
+            
+                                    <Button Content="🔒"
                                             ToolTip.Tip="Заблокировать"
                                             IsVisible="{Binding IsDeleted, Converter={StaticResource InverseBoolConverter}}" 
                                             Command="{Binding $parent[DataGrid].DataContext.BlockUserCommand}"
                                             CommandParameter="{Binding}"/>
-                   
-                                    <!-- Разблокировать -->
-                                    <Button Content="🔓" Margin="2,0"
+            
+                                    <Button Content="🔓"
                                             ToolTip.Tip="Разблокировать"
                                             IsVisible="{Binding IsDeleted}" 
                                             Command="{Binding $parent[DataGrid].DataContext.UnblockUserCommand}"
                                             CommandParameter="{Binding}"/>
-                                            
+            
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                   </DataGridTemplateColumn>
+                    </DataGridTemplateColumn>
+            
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

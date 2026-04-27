@@ -46,4 +46,14 @@ public partial class Ticket
     public virtual ICollection<TicketHistory> TicketHistories { get; set; } = new List<TicketHistory>();
 
     public virtual TicketType TicketType { get; set; } = null!;
+
+    public string TicketTypeName => TicketType?.Name ?? string.Empty;
+
+    public string StatusName => Status?.Name ?? string.Empty;
+
+    public string DepartmentName => Department?.Name ?? string.Empty;
+
+    public string PriorityName => Priority?.Name ?? string.Empty;
+
+    public string AuthorName => Author?.ShortName ?? string.Empty;
 }

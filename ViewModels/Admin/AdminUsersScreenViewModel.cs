@@ -37,6 +37,13 @@ namespace DiplomHelpDeskOka.ViewModels
 
         private bool _isResetting;
 
+        [RelayCommand]
+        private void Logout()
+        {
+            MainWindowViewModel.Instance.CurrentViewModel =
+                new AuthScreenViewModel(); // или твоя LoginScreenViewModel
+        }
+
         public AdminUsersScreenViewModel(User currentUser)
         {
             CurrentUser = currentUser;

@@ -28,6 +28,13 @@ namespace DiplomHelpDeskOka.ViewModels
 
         [ObservableProperty] private string _searchText = "";
 
+        [RelayCommand]
+        private void Logout()
+        {
+            MainWindowViewModel.Instance.CurrentViewModel =
+                new AuthScreenViewModel(); // или твоя LoginScreenViewModel
+        }
+
         // Поля для хранения фильтров с Главного экрана
         private string? _initialFilterType;
         private DateTime? _filterStartDate;
@@ -44,7 +51,7 @@ namespace DiplomHelpDeskOka.ViewModels
             _ = LoadData();
         }
 
-        private async Task LoadData()
+        public async Task LoadData()
         {
             // 1. Загружаем справочники
             Statuses = new ObservableCollection<Status>(

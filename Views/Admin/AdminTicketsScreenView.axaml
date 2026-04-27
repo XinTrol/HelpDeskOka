@@ -14,10 +14,23 @@
                 Background="White" Height="70" Padding="20,10">
             <Grid ColumnDefinitions="Auto, *, Auto">
                 <Image Source="/Assets/Image.png" Height="40"/>
-                <StackPanel Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                    <TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
-                    <TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
-                </StackPanel>
+                <StackPanel Grid.Column="2"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							Orientation="Horizontal"
+							Spacing="10">
+
+					<StackPanel>
+						<TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
+						<TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
+					</StackPanel>
+
+					<Button Content="Выйти"
+							Command="{Binding LogoutCommand}"
+							Background="#D9534F"
+							Foreground="White"
+							Padding="10,5"/>
+				</StackPanel>
             </Grid>
         </Border>
 
@@ -185,8 +198,7 @@
           
           </Grid>
 
-              <!-- DataGrid -->
-            <DataGrid Grid.Row="1" 
+          <DataGrid Grid.Row="1" 
                       ItemsSource="{Binding Tickets}"
                       AutoGenerateColumns="False" 
                       IsReadOnly="True"
@@ -194,29 +206,67 @@
                       CanUserSortColumns="True"
                       Background="#F8F7F5" 
                       Margin="10,0,10,10">
+            
+                <DataGrid.Styles>
+            
+                    <Style Selector="DataGridColumnHeader">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+            
+                    <Style Selector="DataGridCell">
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    </Style>
+            
+                </DataGrid.Styles>
+            
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" />
-                    <DataGridTextColumn Header="Тип" Binding="{Binding TicketType.Name}" Width="120" />
-                    <DataGridTextColumn Header="Статус" Binding="{Binding Status.Name}" Width="100" />
-                    <DataGridTextColumn Header="Приоритет" Binding="{Binding Priority.Name}" Width="100" />
-                    <DataGridTextColumn Header="Отдел" Binding="{Binding Department.Name}" Width="120" />
-                    <DataGridTextColumn Header="Автор" Binding="{Binding Author.ShortName}" Width="150" />
-
-                    <!-- Колонка действий -->
+            
+                    <!-- 👇 главная колонка растягивается -->
+                    <DataGridTextColumn Header="Название"
+                                        Binding="{Binding Title}"
+                                        Width="2*"/>
+            
+                    <!-- 👇 остальные делят место -->
+                    <DataGridTextColumn Header="Тип"
+                                        Binding="{Binding TicketTypeName}"
+                                        Width="*"/>
+            
+                    <DataGridTextColumn Header="Статус"
+                                        Binding="{Binding StatusName}"
+                                        Width="*"/>
+            
+                    <DataGridTextColumn Header="Приоритет"
+                                        Binding="{Binding PriorityName}"
+                                        Width="*"/>
+            
+                    <DataGridTextColumn Header="Отдел"
+                                        Binding="{Binding DepartmentName}"
+                                        Width="*"/>
+            
+                    <DataGridTextColumn Header="Автор"
+                                        Binding="{Binding AuthorName}"
+                                        Width="*"/>
+            
+                    <!-- 👇 кнопки лучше фикс -->
                     <DataGridTemplateColumn Header="Действия" Width="120">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="✏️" Margin="5,0" ToolTip.Tip="Редактировать"
+                                    <Button Content="✏️" Margin="5,0"
                                             Command="{Binding $parent[DataGrid].DataContext.EditTicketCommand}"
                                             CommandParameter="{Binding}"/>
-                                    <Button Content="🗑️" Margin="5,0" ToolTip.Tip="Удалить"
+                                    <Button Content="🗑️" Margin="5,0"
                                             Command="{Binding $parent[DataGrid].DataContext.DeleteTicketCommand}"
                                             CommandParameter="{Binding}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+            
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

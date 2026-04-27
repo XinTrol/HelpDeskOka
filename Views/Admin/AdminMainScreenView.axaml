@@ -18,13 +18,22 @@
                        Height="40"/>
                 <!-- Пользователь -->
                 <StackPanel Grid.Column="2"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center">
-                    <TextBlock Text="{Binding CurrentUser.ShortName}"
-                               FontWeight="SemiBold"/>
-                    <TextBlock Text="{Binding CurrentUser.Role.Name}"
-                               FontSize="12"/>
-                </StackPanel>
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							Orientation="Horizontal"
+							Spacing="10">
+
+					<StackPanel>
+						<TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
+						<TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12"/>
+					</StackPanel>
+
+					<Button Content="Выйти"
+							Command="{Binding LogoutCommand}"
+							Background="#D9534F"
+							Foreground="White"
+							Padding="10,5"/>
+				</StackPanel>
             </Grid>
         </Border>
         <!-- 2. Золотая панель -->
