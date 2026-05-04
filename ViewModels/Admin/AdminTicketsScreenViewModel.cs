@@ -124,6 +124,7 @@ namespace DiplomHelpDeskOka.ViewModels
                 .Include(t => t.Status)
                 .Include(t => t.Priority)
                 .Include(t => t.TicketType)
+                .Include(t => t.UpdatedByUser)
                 .Include(t => t.Department)
                 .Include(t => t.Author)
                 .AsQueryable();

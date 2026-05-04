@@ -56,4 +56,7 @@ public partial class Ticket
     public string PriorityName => Priority?.Name ?? string.Empty;
 
     public string AuthorName => Author?.ShortName ?? string.Empty;
+
+    public long? UpdatedByUserId { get; set; }  
+    public virtual User? UpdatedByUser { get; set; }
 }

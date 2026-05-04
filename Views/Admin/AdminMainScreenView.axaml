@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="950"
              x:Class="DiplomHelpDeskOka.Views.AdminMainScreenView"
              xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
              x:DataType="vm:AdminMainScreenViewModel">
@@ -145,7 +145,8 @@
                                CommandParameter="Overdue"
                                Background="Transparent"
                                BorderThickness="0"
-                               Cursor="Hand">
+                               Cursor="Hand"
+                               CornerRadius="14">
                            <Border Background="#FDEBEC"
                                    CornerRadius="14"
                                    Padding="22">
@@ -170,7 +171,8 @@
                                CommandParameter="New"
                                Background="Transparent"
                                BorderThickness="0"
-                               Cursor="Hand">
+                               Cursor="Hand"
+                               CornerRadius="14">
                            <Border Background="#E7F0FF"
                                    CornerRadius="14"
                                    Padding="22">
@@ -195,7 +197,8 @@
                                CommandParameter="InProgress"
                                Background="Transparent"
                                BorderThickness="0"
-                               Cursor="Hand">
+                               Cursor="Hand"
+                               CornerRadius="14">
                            <Border Background="#FFF4E5"
                                    CornerRadius="14"
                                    Padding="22">
@@ -220,7 +223,8 @@
                                CommandParameter="Closed"
                                Background="Transparent"
                                BorderThickness="0"
-                               Cursor="Hand">
+                               Cursor="Hand"
+                               CornerRadius="14">
                            <Border Background="#E6F6EC"
                                    CornerRadius="14"
                                    Padding="22">
@@ -243,7 +247,7 @@
                </Border>
       
                <!-- ⚡ Быстрые действия -->
-               <Grid ColumnDefinitions="*,*" ColumnSpacing="24" >
+               <Grid ColumnDefinitions="*,*,*" ColumnSpacing="24" >
       
                    <Button Grid.Column="0"
                            Command="{Binding AddUserCommand}"
@@ -284,6 +288,27 @@
                                       TextAlignment="Center"/>
                        </StackPanel>
                    </Button>
+
+                   <Button Grid.Column="2"  
+                           Command="{Binding ExportToExcelCommand}"
+                           IsEnabled="{Binding !IsExporting}"
+                           Background="White"
+                           CornerRadius="16"
+                           Height="128"
+                           BorderThickness="1"
+                           BorderBrush="#EEEEEE"
+                           HorizontalAlignment="Stretch">
+                       <StackPanel Orientation="Vertical"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Spacing="10">
+                           <TextBlock Text="📊" FontSize="36" HorizontalAlignment="Center"/>
+                           <TextBlock Text="Экспорт в Excel"
+                                      FontSize="17"
+                                      FontWeight="Medium"
+                                      TextAlignment="Center"/>
+                       </StackPanel>
+                    </Button>
       
                </Grid>
       

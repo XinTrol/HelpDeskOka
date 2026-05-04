@@ -199,6 +199,15 @@ public partial class PpHelp41Context : DbContext
                 .HasForeignKey(d => d.TicketTypeId)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasConstraintName("tickets_ticket_type_id_fkey");
+
+            entity.Property(e => e.UpdatedByUserId)
+        .HasColumnName("updated_by_user_id");   // ← важно!
+
+            entity.HasOne(d => d.UpdatedByUser)
+                .WithMany()
+                .HasForeignKey(d => d.UpdatedByUserId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("tickets_updated_by_user_id_fkey");
         });
 
         modelBuilder.Entity<TicketHistory>(entity =>

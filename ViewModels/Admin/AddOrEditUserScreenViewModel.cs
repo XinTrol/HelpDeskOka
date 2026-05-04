@@ -1,14 +1,15 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Interactivity;
+using Avalonia.Media;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using DiplomHelpDeskOka.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
 
 namespace DiplomHelpDeskOka.ViewModels
 {
@@ -186,57 +187,86 @@ namespace DiplomHelpDeskOka.ViewModels
             MainWindowViewModel.Instance.CurrentViewModel = new AdminTicketsScreenViewModel(CurrentUser);
         }
 
-        // === ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ДИАЛОГОВ ===
+        // === УЛУЧШЕННЫЙ ДИАЛОГ ВВОДА ===
         private async Task<string?> ShowInputDialogAsync(string title, string prompt)
         {
-            var textBox = new TextBox { Watermark = prompt, Width = 300 };
+            var input = new TextBox
+            {
+                Watermark = prompt,
+                Width = 340,
+                Height = 40,
+                CornerRadius = new CornerRadius(8),
+                FontSize = 15,
+                VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center
+            };
 
-            var okButton = new Button { Content = "OK", Width = 80 };
-            var cancelButton = new Button { Content = "Отмена", Width = 80 };
+            var okButton = new Button
+            {
+                Content = "Добавить",
+                Width = 120,
+                Height = 38,
+                CornerRadius = new CornerRadius(8),
+                Background = new SolidColorBrush(Color.FromRgb(201, 168, 106)), // #C9A86A
+                Foreground = Brushes.White,
+                FontWeight = FontWeight.Medium,
+                HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center
+            };
+
+            var cancelButton = new Button
+            {
+                Content = "Отмена",
+                Width = 120,
+                Height = 38,
+                CornerRadius = new CornerRadius(8),
+                HorizontalContentAlignment = Avalonia.Layout.HorizontalAlignment.Center,
+                VerticalContentAlignment = Avalonia.Layout.VerticalAlignment.Center
+            };
+
 
             string? result = null;
 
             var dialog = new Window
             {
                 Title = title,
-                Width = 400,
-                Height = 200,
+                Width = 420,
+                Height = 220,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Background = Brushes.White,
                 Content = new StackPanel
                 {
-                    Margin = new Thickness(20),
-                    Spacing = 10,
+                    Margin = new Thickness(30),
+                    Spacing = 20,
                     Children =
             {
-                new TextBlock { Text = prompt },
-                textBox,
+                new TextBlock
+                {
+                    Text = prompt,
+                    FontSize = 16,
+                    FontWeight = FontWeight.SemiBold,
+                    TextWrapping = TextWrapping.Wrap
+                },
+                input,
                 new StackPanel
                 {
                     Orientation = Avalonia.Layout.Orientation.Horizontal,
-                    Spacing = 10,
+                    Spacing = 12,
                     HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center,
-                    Children =
-                    {
-                        okButton,
-                        cancelButton
-                    }
+                    Children = { okButton, cancelButton }
                 }
-                }
+            }
                 }
             };
 
             okButton.Click += (_, _) =>
             {
-                result = textBox.Text;
+                result = input.Text?.Trim();
                 dialog.Close();
             };
 
             cancelButton.Click += (_, _) => dialog.Close();
 
-            var mainWindow =
-                (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
-                ?.MainWindow;
-
+            var mainWindow = (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
             if (mainWindow != null)
                 await dialog.ShowDialog(mainWindow);
             else
@@ -245,43 +275,52 @@ namespace DiplomHelpDeskOka.ViewModels
             return result;
         }
 
+        // === УЛУЧШЕННОЕ ОКНО СООБЩЕНИЯ ===
         private async Task ShowMessageAsync(string title, string message)
         {
             var okButton = new Button
             {
                 Content = "OK",
-                Width = 80,
-                HorizontalAlignment = Avalonia.Layout.HorizontalAlignment.Center
+                Width = 130,
+                Height = 40,
+                CornerRadius = new CornerRadius(8),
+                Background = new SolidColorBrush(Color.FromRgb(201, 168, 106)),
+                Foreground = Brushes.White,
+                FontWeight = FontWeight.Medium
             };
 
-            var window = new Window
+            var dialog = new Window
             {
                 Title = title,
-                Width = 300,
-                Height = 150,
+                Width = 380,
+                Height = 190,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                Background = Brushes.White,
                 Content = new StackPanel
                 {
-                    Margin = new Thickness(20),
-                    Spacing = 10,
+                    Margin = new Thickness(30),
+                    Spacing = 20,
                     Children =
             {
-                new TextBlock { Text = message },
+                new TextBlock
+                {
+                    Text = message,
+                    FontSize = 15,
+                    TextWrapping = TextWrapping.Wrap,
+                    TextAlignment = TextAlignment.Center
+                },
                 okButton
-                }
+            }
                 }
             };
 
-            okButton.Click += (_, _) => window.Close();
+            okButton.Click += (_, _) => dialog.Close();
 
-            var mainWindow =
-                (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)
-                ?.MainWindow;
-
+            var mainWindow = (Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime)?.MainWindow;
             if (mainWindow != null)
-                await window.ShowDialog(mainWindow);
+                await dialog.ShowDialog(mainWindow);
             else
-                window.Show();
+                dialog.Show();
         }
 
         [RelayCommand] private void Cancel() => GoBack();

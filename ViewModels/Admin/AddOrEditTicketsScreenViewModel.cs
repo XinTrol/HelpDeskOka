@@ -15,26 +15,19 @@ namespace DiplomHelpDeskOka.ViewModels
         private bool _isLoading = false;
 
         [ObservableProperty] private User _currentUser;
-
         [ObservableProperty] private string _authorName = "";
         [ObservableProperty] private string _ticketTitle = "";
         [ObservableProperty] private string _description = "";
-
         [ObservableProperty] private DateTimeOffset? _plannedDate;
         [ObservableProperty] private TimeSpan? _plannedTime;
-
         [ObservableProperty] private string _closedAtDisplay = "Не закрыта";
-
         [ObservableProperty] private DateTime? _createdAt;
-
         [ObservableProperty] private ObservableCollection<Comment> _comments = new();
         [ObservableProperty] private string _newCommentText = "";
-
         [ObservableProperty] private TicketType? _selectedType;
         [ObservableProperty] private Status? _selectedStatus;
         [ObservableProperty] private Priority? _selectedPriority;
         [ObservableProperty] private Department? _selectedDepartment;
-
         [ObservableProperty] private User? _selectedResponsibleUser;
 
         [ObservableProperty] private ObservableCollection<TicketType> _ticketTypes = new();
@@ -42,7 +35,6 @@ namespace DiplomHelpDeskOka.ViewModels
         [ObservableProperty] private ObservableCollection<Priority> _priorities = new();
         [ObservableProperty] private ObservableCollection<Department> _departments = new();
         [ObservableProperty] private ObservableCollection<User> _responsibleUsers = new();
-
         [ObservableProperty] private string _errorMessage = "";
 
         public bool IsEditMode => _editingTicketId.HasValue;
@@ -59,14 +51,12 @@ namespace DiplomHelpDeskOka.ViewModels
         partial void OnSelectedDepartmentChanged(Department? value)
         {
             if (_isLoading) return;
-
             if (value == null)
             {
                 ResponsibleUsers.Clear();
                 SelectedResponsibleUser = null;
                 return;
             }
-
             _ = LoadUsersByDepartment(value.Id);
         }
 
@@ -93,8 +83,7 @@ namespace DiplomHelpDeskOka.ViewModels
                 if (IsEditMode)
                 {
                     var ticket = await db.Tickets
-                        .Include(t => t.Comments)
-                            .ThenInclude(c => c.User)
+                        .Include(t => t.Comments).ThenInclude(c => c.User)
                         .Include(t => t.Author)
                         .FirstOrDefaultAsync(t => t.Id == _editingTicketId);
 
@@ -105,57 +94,34 @@ namespace DiplomHelpDeskOka.ViewModels
                     Description = ticket.Description;
                     CreatedAt = ticket.CreatedAt;
 
-                    // --- ДАТЫ ЗАЯВКИ (Принудительный Unspecified для остановки дрейфа) ---
                     if (ticket.PlannedCompletionDate.HasValue)
                     {
                         var dbDate = ticket.PlannedCompletionDate.Value;
-
-                        // 🔥 КРИТИЧЕСКИ ИСПРАВЛЕНИЕ: Создаем DateTimeOffset с Offset 0.
-                        // Это предотвращает добавление +3 часов от системы при загрузке.
                         PlannedDate = new DateTimeOffset(dbDate.Ticks, TimeSpan.Zero);
-
-                        // Время берем как есть
                         PlannedTime = dbDate.TimeOfDay;
                     }
 
-                    ClosedAtDisplay = ticket.ClosedAt.HasValue
-                        ? ticket.ClosedAt.Value.ToString("dd.MM.yyyy HH:mm")
-                        : "Не закрыта";
+                    ClosedAtDisplay = ticket.ClosedAt?.ToString("dd.MM.yyyy HH:mm") ?? "Не закрыта";
 
                     SelectedType = TicketTypes.FirstOrDefault(x => x.Id == ticket.TicketTypeId);
                     SelectedStatus = Statuses.FirstOrDefault(x => x.Id == ticket.StatusId);
                     SelectedPriority = Priorities.FirstOrDefault(x => x.Id == ticket.PriorityId);
 
                     var targetDepartment = Departments.FirstOrDefault(x => x.Id == ticket.DepartmentId);
-
                     if (targetDepartment != null)
-                    {
                         await LoadUsersByDepartment(targetDepartment.Id);
-                    }
 
                     SelectedDepartment = targetDepartment;
                     SelectedResponsibleUser = ResponsibleUsers.FirstOrDefault(u => u.Id == ticket.ResponsibleUserId);
 
-                    // --- КОММЕНТАРИИ (UTC -> Local) ---
-                    var loadedComments = ticket.Comments.OrderBy(c => c.CreatedAt).ToList();
-
-                    foreach (var comment in loadedComments)
-                    {
-                        if (comment.CreatedAt.Kind == DateTimeKind.Utc)
-                        {
-                            comment.CreatedAt = comment.CreatedAt.ToLocalTime();
-                        }
-                    }
-
-                    Comments = new ObservableCollection<Comment>(loadedComments);
+                    Comments = new ObservableCollection<Comment>(
+                        ticket.Comments.OrderBy(c => c.CreatedAt).ToList());
                 }
                 else
                 {
-                    // 🔥 ИСПРАВЛЕНИЕ АВТОРА: При создании новой заявки сразу пишем текущего пользователя
                     AuthorName = CurrentUser.FullName;
-
-                    SelectedStatus = Statuses.FirstOrDefault(s => s.Name == "Новая" || s.Id == 1);
-                    SelectedPriority = Priorities.FirstOrDefault(p => p.Name == "Средний" || p.Id == 2);
+                    SelectedStatus = Statuses.FirstOrDefault(s => s.Name == "новая" || s.Id == 1);
+                    SelectedPriority = Priorities.FirstOrDefault(p => p.Name == "средний" || p.Id == 2);
                 }
             }
             finally
@@ -167,17 +133,8 @@ namespace DiplomHelpDeskOka.ViewModels
         [RelayCommand]
         private async Task AddComment()
         {
-            if (!IsEditMode)
-            {
-                ErrorMessage = "Сначала создайте заявку";
+            if (!IsEditMode || string.IsNullOrWhiteSpace(NewCommentText))
                 return;
-            }
-
-            if (string.IsNullOrWhiteSpace(NewCommentText))
-            {
-                ErrorMessage = "Введите текст";
-                return;
-            }
 
             var dbComment = new Comment
             {
@@ -191,21 +148,15 @@ namespace DiplomHelpDeskOka.ViewModels
             await db.Comments.AddAsync(dbComment);
             await db.SaveChangesAsync();
 
-            var uiComment = new Comment
+            Comments.Add(new Comment
             {
                 Id = dbComment.Id,
-                TicketId = dbComment.TicketId,
-                UserId = dbComment.UserId,
                 Text = dbComment.Text,
                 CreatedAt = dbComment.CreatedAt.ToLocalTime(),
-                UpdatedAt = dbComment.UpdatedAt,
                 User = CurrentUser
-            };
-
-            Comments.Add(uiComment);
+            });
 
             NewCommentText = "";
-            ErrorMessage = "";
         }
 
         [RelayCommand]
@@ -213,24 +164,19 @@ namespace DiplomHelpDeskOka.ViewModels
         {
             if (string.IsNullOrWhiteSpace(TicketTitle))
             {
-                ErrorMessage = "Введите название";
+                ErrorMessage = "Введите название заявки";
                 return;
             }
 
-            // --- ДАТЫ ЗАЯВКИ (Unspecified) ---
             DateTime? plannedDateTime = null;
             if (PlannedDate.HasValue)
             {
-     
                 var uiDate = PlannedDate.Value.DateTime;
                 var uiTime = PlannedTime ?? TimeSpan.Zero;
-
-                var finalDate = uiDate.Date + uiTime;
-                plannedDateTime = DateTime.SpecifyKind(finalDate, DateTimeKind.Unspecified);
+                plannedDateTime = DateTime.SpecifyKind(uiDate.Date + uiTime, DateTimeKind.Unspecified);
             }
 
-            // 🔥 ИСПРАВЛЕНИЕ РЕГИСТРА: "Закрыта" (с большой буквы), чтобы совпадало с базой
-            bool isClosed = SelectedStatus?.Name == "Закрыта" || SelectedStatus?.Id == 3;
+            bool isClosed = SelectedStatus?.Name?.ToLower() == "закрыта" || SelectedStatus?.Id == 3;
 
             if (IsEditMode)
             {
@@ -240,25 +186,23 @@ namespace DiplomHelpDeskOka.ViewModels
                 ticket.Title = TicketTitle;
                 ticket.Description = Description;
                 ticket.PlannedCompletionDate = plannedDateTime;
-
-                if (isClosed)
-                    ticket.ClosedAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
-                else
-                    ticket.ClosedAt = null;
+                ticket.ClosedAt = isClosed
+                    ? DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified)
+                    : null;
 
                 ticket.TicketTypeId = SelectedType!.Id;
                 ticket.StatusId = SelectedStatus!.Id;
                 ticket.PriorityId = SelectedPriority!.Id;
                 ticket.DepartmentId = SelectedDepartment!.Id;
-
                 ticket.ResponsibleUserId = SelectedResponsibleUser?.Id;
 
-                // UpdatedAt тоже Unspecified
+                // === КЛЮЧЕВОЕ ДЛЯ ИСТОРИИ ===
+                ticket.UpdatedByUserId = CurrentUser.Id;
                 ticket.UpdatedAt = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
             }
             else
             {
-                var nowUnspecified = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
+                var now = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Unspecified);
 
                 var newTicket = new Ticket
                 {
@@ -271,14 +215,13 @@ namespace DiplomHelpDeskOka.ViewModels
                     DepartmentId = SelectedDepartment!.Id,
                     AuthorId = CurrentUser.Id,
                     ResponsibleUserId = SelectedResponsibleUser?.Id,
-                    CreatedAt = nowUnspecified,
-                    UpdatedAt = nowUnspecified
+                    CreatedAt = now,
+                    UpdatedAt = now,
+                    UpdatedByUserId = CurrentUser.Id
                 };
 
                 if (isClosed)
-                    newTicket.ClosedAt = nowUnspecified;
-                else
-                    newTicket.ClosedAt = null;
+                    newTicket.ClosedAt = now;
 
                 await db.Tickets.AddAsync(newTicket);
             }
@@ -297,9 +240,10 @@ namespace DiplomHelpDeskOka.ViewModels
 
             db.Tickets.Remove(ticket);
             await db.SaveChangesAsync();
-
             GoBack();
         }
+
+        // ==================== НАВИГАЦИЯ ====================
 
         [RelayCommand]
         private void GoToMainScreen()

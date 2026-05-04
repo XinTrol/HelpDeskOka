@@ -173,3 +173,11 @@ C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDe
 C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\BCrypt.Net-Next.dll
 C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\Avalonia.Controls.DataGrid.dll
 C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\obj\Debug\net10.0\DiplomHelpDeskOka.sourcelink.json
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\ClosedXML.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\ClosedXML.Parser.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\DocumentFormat.OpenXml.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\DocumentFormat.OpenXml.Framework.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\ExcelNumberFormat.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\RBush.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\SixLabors.Fonts.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\System.IO.Packaging.dll
