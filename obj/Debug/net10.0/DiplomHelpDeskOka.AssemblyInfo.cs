@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DiplomHelpDeskOka")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f249c7ac41b8d09cecca1b09c81e7e4b4d602b93")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+688bb288f92a6451b128819c623638ab52124aa0")]
 [assembly: System.Reflection.AssemblyProductAttribute("DiplomHelpDeskOka")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DiplomHelpDeskOka")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

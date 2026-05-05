@@ -39,7 +39,7 @@ namespace DiplomHelpDeskOka.ViewModels
         private void Logout()
         {
             MainWindowViewModel.Instance.CurrentViewModel =
-                new AuthScreenViewModel(); // или твоя LoginScreenViewModel
+                new AuthScreenViewModel(); 
         }
 
         private async Task LoadData()
@@ -93,6 +93,7 @@ namespace DiplomHelpDeskOka.ViewModels
                 .Include(t => t.Priority)
                 .Include(t => t.TicketType)
                 .Include(t => t.Department)
+                .Include(t => t.ResponsibleUser)
                 .Include(t => t.Author)
                 .Where(t => t.AuthorId == CurrentUser.Id) // Только свои заявки
                 .AsQueryable();

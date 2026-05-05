@@ -1,21 +1,21 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DiplomHelpDeskOka.Views.AdminUsersScreenView"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="DiplomHelpDeskOka.Views.AdminUsersScreenView"
 
-             xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
-             x:DataType="vm:AdminUsersScreenViewModel">
+			 xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
+			 x:DataType="vm:AdminUsersScreenViewModel">
 
-     <Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="200, *">
+	<Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="200, *">
 
-        <!-- Верхняя панель -->
-        <Border Grid.Row="0" Grid.ColumnSpan="2"
-                Background="White" Height="70" Padding="20,10">
-            <Grid ColumnDefinitions="Auto, *, Auto">
-                <Image Source="/Assets/Image.png" Height="40"/>
-                <StackPanel Grid.Column="2"
+		<!-- Верхняя панель -->
+		<Border Grid.Row="0" Grid.ColumnSpan="2"
+				Background="White" Height="70" Padding="20,10">
+			<Grid ColumnDefinitions="Auto, *, Auto">
+				<Image Source="/Assets/Image.png" Height="40"/>
+				<StackPanel Grid.Column="2"
 							HorizontalAlignment="Right"
 							VerticalAlignment="Center"
 							Orientation="Horizontal"
@@ -32,217 +32,255 @@
 							Foreground="White"
 							Padding="10,5"/>
 				</StackPanel>
-            </Grid>
-        </Border>
+			</Grid>
+		</Border>
 
-        <!-- Золотая панель -->
-        <Border Grid.Row="1" Grid.ColumnSpan="2"
-                Background="#C9A86A" Height="60" Padding="20,0">
-            <Grid ColumnDefinitions="200, *">
-                <TextBlock Grid.Column="0" Text="Меню" VerticalAlignment="Center"
-                           Foreground="White" FontSize="16" FontWeight="SemiBold"/>
-                <TextBlock Grid.Column="1" Text="Пользователи" HorizontalAlignment="Center" VerticalAlignment="Center"
-                           Foreground="White" FontSize="18" FontWeight="Bold"/>
-            </Grid>
-        </Border>
+		<!-- Золотая панель -->
+		<Border Grid.Row="1" Grid.ColumnSpan="2"
+				Background="#C9A86A" Height="60" Padding="20,0">
+			<Grid ColumnDefinitions="200, *">
+				<TextBlock Grid.Column="0" Text="Меню" VerticalAlignment="Center"
+						   Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+				<TextBlock Grid.Column="1" Text="Пользователи" HorizontalAlignment="Center" VerticalAlignment="Center"
+						   Foreground="White" FontSize="18" FontWeight="Bold"/>
+			</Grid>
+		</Border>
 
-       <!-- 📚 SIDEBAR -->
-        <Border Grid.Row="2"
-                Grid.Column="0"
-                Background="#F1EFEA"
-                Padding="10">
+		<!-- 📚 SIDEBAR -->
+		<Border Grid.Row="2"
+				Grid.Column="0"
+				Background="#F1EFEA"
+				Padding="10">
 
-            <StackPanel Spacing="10">
+			<StackPanel Spacing="10">
 
-                <Button Content="Главная" 
-                            Height="40"
-                            Width="160"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            Background="Transparent"
-                            Command="{Binding GoToMainScreenCommand}"/>
+				<Button Content="Главная"
+						Height="40"
+						Width="160"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						HorizontalContentAlignment="Left"
+						VerticalContentAlignment="Center"
+						Background="Transparent"
+						Command="{Binding GoToMainScreenCommand}"/>
 
-                <Border Background="Transparent"
-                        Padding="10"
-                        BorderBrush="#C9A86A"
-                        BorderThickness="3,0,0,0">
-                    
-                    <Button Content="Пользователи" 
-                            Height="40"
-                            Width="160"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            Background="Transparent"/>
-                </Border>
+				<Border Background="Transparent"
+						Padding="10"
+						BorderBrush="#C9A86A"
+						BorderThickness="3,0,0,0">
 
-                <Button Content="Заявки" 
-                            Height="40"
-                            Width="160"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            Background="Transparent"
-                            Command="{Binding GoToTicketsScreenCommand}"/>
+					<Button Content="Пользователи"
+							Height="40"
+							Width="160"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Center"
+							HorizontalContentAlignment="Left"
+							VerticalContentAlignment="Center"
+							Background="Transparent"/>
+				</Border>
 
-            </StackPanel>
-        </Border>
+				<Button Content="Заявки"
+						Height="40"
+						Width="160"
+						HorizontalAlignment="Left"
+						VerticalAlignment="Center"
+						HorizontalContentAlignment="Left"
+						VerticalContentAlignment="Center"
+						Background="Transparent"
+						Command="{Binding GoToTicketsScreenCommand}"/>
 
-        <!-- Основная область: фильтры + DataGrid -->
-        <Grid Grid.Row="2" Grid.Column="1" RowDefinitions="Auto, *">
-            <!-- Панель фильтров -->
-            <Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto, Auto, Auto" Margin="10">
-                <TextBox Grid.Column="0" 
-                         Height="38"
-                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                         VerticalContentAlignment="Center"
-                         Watermark="Поиск по ФИО, email, логину" 
-                         Margin="0,0,10,0"/>
-                
-                <ComboBox Grid.Column="1" Width="180" Margin="0,0,10,0"
-                          ItemsSource="{Binding Departments}"
-                          Height="38"
-                          SelectedItem="{Binding SelectedDepartment}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                
-                <ComboBox Grid.Column="2" Width="150" Margin="0,0,10,0"
-                          ItemsSource="{Binding Roles}"
-                          Height="38"
-                          SelectedItem="{Binding SelectedRole}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}"/>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
+			</StackPanel>
+		</Border>
 
-                <Button Grid.Column="3" 
-                        Content="Сбросить фильтры"
-                        Height="38"
-                        Background="#D4B36A" 
-                        Foreground="White"
-                        Margin="0,0,10,0"
-                        Command="{Binding ResetFiltersCommand}"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"/>
+		<!-- Основная область: фильтры + DataGrid -->
+		<Grid Grid.Row="2" Grid.Column="1" RowDefinitions="Auto, *">
+			<!-- Панель фильтров -->
+			<Grid Grid.Row="0" ColumnDefinitions="*, Auto, Auto, Auto, Auto" Margin="10">
+				<TextBox Grid.Column="0"
+						 Height="38"
+						 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+						 VerticalContentAlignment="Center"
+						 Watermark="Поиск по ФИО, email, логину"
+						 Margin="10,0,10,0"/>
 
-                <Button Grid.Column="4" 
-                        Content="+" 
-                        Width="38" 
-                        Height="38"
-                        Background="#D4B36A" 
-                        Foreground="White" 
-                        FontWeight="Bold"
-                        Command="{Binding AddUserCommand}"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"/>
-            </Grid>
+				<ComboBox Grid.Column="1" Width="180" Margin="0,0,10,0"
+						  ItemsSource="{Binding Departments}"
+						  Height="38"
+						  SelectedItem="{Binding SelectedDepartment}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
 
-            <DataGrid Grid.Row="1" 
-                      ItemsSource="{Binding AllUsers}"
-                      AutoGenerateColumns="False" 
-                      IsReadOnly="True"
-                      CanUserResizeColumns="True" 
-                      CanUserSortColumns="True"
-                      Background="#F8F7F5" 
-                      Margin="10,0,10,10">
-            
-                <DataGrid.Styles>
-            
-                    <!-- Заголовки -->
-                    <Style Selector="DataGridColumnHeader">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-            
-                    <!-- Ячейки -->
-                    <Style Selector="DataGridCell">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-            
-                </DataGrid.Styles>
-            
-                <DataGrid.Columns>
-            
-                    <!-- 👇 растягивается -->
-                    <DataGridTextColumn Header="ФИО"
-                                        Binding="{Binding FullName}"
-                                        Width="2*"/>
-            
-                    <DataGridTextColumn Header="Email"
-                                        Binding="{Binding Email}"
-                                        Width="2*"/>
-            
-                    <DataGridTextColumn Header="Логин"
-                                        Binding="{Binding Login}"
-                                        Width="*"/>
-            
-                    <DataGridTextColumn Header="Отдел"
-                                        Binding="{Binding DepartmentName}"
-                                        Width="*"/>
-            
-                    <DataGridTextColumn Header="Должность"
-                                        Binding="{Binding PositionName}"
-                                        Width="*"/>
-            
-                    <DataGridTextColumn Header="Роль"
-                                        Binding="{Binding RoleName}"
-                                        Width="*"/>
-            
-                    <!-- 👇 статус (оставляем Template из-за цвета) -->
-                    <DataGridTemplateColumn Header="Статус" Width="*">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding StatusText}"
-                                           Foreground="{Binding IsDeleted, Converter={StaticResource BoolToStatusColor}}"
-                                           HorizontalAlignment="Center"
-                                           TextAlignment="Center"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-            
-                    <!-- 👇 действия фикс ширины -->
-                    <DataGridTemplateColumn Header="Действия" Width="160">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Center"
-                                            Spacing="5">
-            
-                                    <Button Content="✏️"
-                                            ToolTip.Tip="Редактировать"
-                                            Command="{Binding $parent[DataGrid].DataContext.EditUserCommand}"
-                                            CommandParameter="{Binding}"/>
-            
-                                    <Button Content="🔒"
-                                            ToolTip.Tip="Заблокировать"
-                                            IsVisible="{Binding IsDeleted, Converter={StaticResource InverseBoolConverter}}" 
-                                            Command="{Binding $parent[DataGrid].DataContext.BlockUserCommand}"
-                                            CommandParameter="{Binding}"/>
-            
-                                    <Button Content="🔓"
-                                            ToolTip.Tip="Разблокировать"
-                                            IsVisible="{Binding IsDeleted}" 
-                                            Command="{Binding $parent[DataGrid].DataContext.UnblockUserCommand}"
-                                            CommandParameter="{Binding}"/>
-            
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-            
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-    </Grid>
+				<ComboBox Grid.Column="2" Width="150" Margin="0,0,10,0"
+						  ItemsSource="{Binding Roles}"
+						  Height="38"
+						  SelectedItem="{Binding SelectedRole}">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+
+				<Button Grid.Column="3"
+						Content="Сбросить фильтры"
+						Height="38"
+						Background="#D4B36A"
+						Foreground="White"
+						Margin="0,0,10,0"
+						Command="{Binding ResetFiltersCommand}"
+						HorizontalContentAlignment="Center"
+						VerticalContentAlignment="Center"/>
+
+				<Button Grid.Column="4"
+						Content="+"
+						Width="38"
+						Height="38"
+						Background="#D4B36A"
+						Foreground="White"
+						FontWeight="Bold"
+						Command="{Binding AddUserCommand}"
+						HorizontalContentAlignment="Center"
+						VerticalContentAlignment="Center"
+						Margin="0,0,10,0"/>
+			</Grid>
+
+			<!-- DataGrid Пользователей -->
+			<DataGrid Grid.Row="1"
+					  ItemsSource="{Binding AllUsers}"
+					  AutoGenerateColumns="False"
+					  IsReadOnly="True"
+					  CanUserResizeColumns="True"
+					  CanUserSortColumns="True"
+					  Background="White"
+					  BorderBrush="#E0E0E0"
+					  BorderThickness="1"
+					  CornerRadius="12"
+					  Margin="20,10,20,20"
+					  RowHeight="54"
+					  GridLinesVisibility="None">
+
+				<!-- Стили -->
+				<DataGrid.Styles>
+					<Style Selector="DataGridRow">
+						<Setter Property="Height" Value="54"/>
+					</Style>
+					<Style Selector="DataGridRow:pointerover">
+						<Setter Property="Background" Value="#F8F7F5"/>
+					</Style>
+					<Style Selector="DataGridRow:selected">
+						<Setter Property="Background" Value="#F0EDE6"/>
+					</Style>
+
+					<!-- Стиль заголовков -->
+					<Style Selector="DataGridColumnHeader">
+						<Setter Property="Background" Value="#F8F7F5"/>
+						<Setter Property="Foreground" Value="#2B2B2B"/>
+						<Setter Property="FontWeight" Value="SemiBold"/>
+						<Setter Property="FontSize" Value="14"/>
+						<Setter Property="Padding" Value="12,10"/>
+						<Setter Property="BorderBrush" Value="#E0E0E0"/>
+						<Setter Property="BorderThickness" Value="0,0,0,1"/>
+					</Style>
+
+					<Style Selector="DataGridColumnHeader TextBlock">
+						<Setter Property="TextAlignment" Value="Center"/>
+						<Setter Property="VerticalAlignment" Value="Center"/>
+					</Style>
+				</DataGrid.Styles>
+
+				<DataGrid.Columns>
+
+					<DataGridTextColumn Header="№"
+										Binding="{Binding Id}"
+										Width="70" />
+
+					<DataGridTextColumn Header="ФИО"
+										Binding="{Binding FullName}"
+										Width="2*"
+										MinWidth="260" />
+
+					<DataGridTextColumn Header="Email"
+										Binding="{Binding Email}"
+										Width="2*"
+										MinWidth="220" />
+
+					<DataGridTextColumn Header="Логин"
+										Binding="{Binding Login}"
+										Width="Auto"
+										MinWidth="110" />
+
+					<DataGridTextColumn Header="Отдел"
+										Binding="{Binding DepartmentName}"
+										Width="Auto"
+										MinWidth="140" />
+
+					<DataGridTextColumn Header="Должность"
+										Binding="{Binding PositionName}"
+										Width="Auto"
+										MinWidth="140" />
+
+					<DataGridTextColumn Header="Роль"
+										Binding="{Binding RoleName}"
+										Width="Auto"
+										MinWidth="110" />
+
+					<!-- Статус с цветом -->
+					<DataGridTemplateColumn Header="Статус" Width="110">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<TextBlock Text="{Binding StatusText}"
+										   FontWeight="Medium"
+										   Foreground="{Binding IsDeleted, Converter={StaticResource BoolToStatusColor}}"
+										   HorizontalAlignment="Center"
+										   VerticalAlignment="Center"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+
+					<!-- Действия -->
+					<DataGridTemplateColumn Header="Действия" Width="170">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal"
+											HorizontalAlignment="Center"
+											Spacing="6">
+
+									<Button Content="✏️"
+											ToolTip.Tip="Редактировать"
+											Width="38" Height="38"
+											Background="Transparent"
+											BorderThickness="0"
+											Command="{Binding $parent[DataGrid].DataContext.EditUserCommand}"
+											CommandParameter="{Binding}"/>
+
+									<Button Content="🔒"
+											ToolTip.Tip="Заблокировать"
+											Width="38" Height="38"
+											Background="Transparent"
+											BorderThickness="0"
+											IsVisible="{Binding IsDeleted, Converter={StaticResource InverseBoolConverter}}"
+											Command="{Binding $parent[DataGrid].DataContext.BlockUserCommand}"
+											CommandParameter="{Binding}"/>
+
+									<Button Content="🔓"
+											ToolTip.Tip="Разблокировать"
+											Width="38" Height="38"
+											Background="Transparent"
+											BorderThickness="0"
+											IsVisible="{Binding IsDeleted}"
+											Command="{Binding $parent[DataGrid].DataContext.UnblockUserCommand}"
+											CommandParameter="{Binding}"/>
+								</StackPanel>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</Grid>
 </UserControl>

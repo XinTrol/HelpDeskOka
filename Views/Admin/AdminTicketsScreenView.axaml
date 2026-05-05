@@ -1,20 +1,20 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="DiplomHelpDeskOka.Views.AdminTicketsScreenView"
-             xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
-             x:DataType="vm:AdminTicketsScreenViewModel">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 x:Class="DiplomHelpDeskOka.Views.AdminTicketsScreenView"
+			 xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
+			 x:DataType="vm:AdminTicketsScreenViewModel">
 
-    <Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="200, *">
+	<Grid RowDefinitions="Auto, Auto, *" ColumnDefinitions="200, *">
 
-        <!-- Верхняя панель -->
-        <Border Grid.Row="0" Grid.ColumnSpan="2"
-                Background="White" Height="70" Padding="20,10">
-            <Grid ColumnDefinitions="Auto, *, Auto">
-                <Image Source="/Assets/Image.png" Height="40"/>
-                <StackPanel Grid.Column="2"
+		<!-- Верхняя панель -->
+		<Border Grid.Row="0" Grid.ColumnSpan="2"
+				Background="White" Height="70" Padding="20,10">
+			<Grid ColumnDefinitions="Auto, *, Auto">
+				<Image Source="/Assets/Image.png" Height="40"/>
+				<StackPanel Grid.Column="2"
 							HorizontalAlignment="Right"
 							VerticalAlignment="Center"
 							Orientation="Horizontal"
@@ -31,244 +31,286 @@
 							Foreground="White"
 							Padding="10,5"/>
 				</StackPanel>
-            </Grid>
-        </Border>
+			</Grid>
+		</Border>
 
-        <!-- Золотая панель -->
-        <Border Grid.Row="1" Grid.ColumnSpan="2"
-                Background="#C9A86A" Height="60" Padding="20,0">
-            <Grid ColumnDefinitions="200, *">
-                <TextBlock Grid.Column="0" Text="Меню" VerticalAlignment="Center"
-                           Foreground="White" FontSize="16" FontWeight="SemiBold"/>
-                <TextBlock Grid.Column="1" Text="Заявки" HorizontalAlignment="Center"
-                           VerticalAlignment="Center"
-                           Foreground="White" FontSize="18" FontWeight="Bold"/>
-            </Grid>
-        </Border>
+		<!-- Золотая панель -->
+		<Border Grid.Row="1" Grid.ColumnSpan="2"
+				Background="#C9A86A" Height="60" Padding="20,0">
+			<Grid ColumnDefinitions="200, *">
+				<TextBlock Grid.Column="0" Text="Меню" VerticalAlignment="Center"
+						   Foreground="White" FontSize="16" FontWeight="SemiBold"/>
+				<TextBlock Grid.Column="1" Text="Заявки" HorizontalAlignment="Center"
+						   VerticalAlignment="Center"
+						   Foreground="White" FontSize="18" FontWeight="Bold"/>
+			</Grid>
+		</Border>
 
-        <!-- Боковое меню -->
-        <Border Grid.Row="2" Grid.Column="0" Background="#F1EFEA" Padding="10">
-            <StackPanel Spacing="10">
-                <Button Content="Главная" 
-                        Height="40" 
-                        Width="160" 
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center"
-                        HorizontalAlignment="Left"
-                        Background="Transparent" 
-                        Command="{Binding GoToMainScreenCommand}"/>
+		<!-- Боковое меню -->
+		<Border Grid.Row="2" Grid.Column="0" Background="#F1EFEA" Padding="10">
+			<StackPanel Spacing="10">
+				<Button Content="Главная"
+						Height="40"
+						Width="160"
+						HorizontalContentAlignment="Left"
+						VerticalContentAlignment="Center"
+						HorizontalAlignment="Left"
+						Background="Transparent"
+						Command="{Binding GoToMainScreenCommand}"/>
 
-                <Button Content="Пользователи" 
-                        Height="40" 
-                        Width="160" 
-                        HorizontalAlignment="Left"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center"
-                        Background="Transparent" 
-                        Command="{Binding GoToUsersCommand}"/>
+				<Button Content="Пользователи"
+						Height="40"
+						Width="160"
+						HorizontalAlignment="Left"
+						HorizontalContentAlignment="Left"
+						VerticalContentAlignment="Center"
+						Background="Transparent"
+						Command="{Binding GoToUsersCommand}"/>
 
-                <Border Background="Transparent" 
-                        Padding="10" 
-                        BorderBrush="#C9A86A" 
-                        BorderThickness="3,0,0,0">
+				<Border Background="Transparent"
+						Padding="10"
+						BorderBrush="#C9A86A"
+						BorderThickness="3,0,0,0">
 
-                    <Button Content="Заявки" 
-                            Height="40" 
-                            Width="160" 
-                            HorizontalAlignment="Left"
-                            HorizontalContentAlignment="Left"
-                            VerticalContentAlignment="Center"
-                            Background="Transparent"/>
-                </Border>
-            </StackPanel>
-        </Border>
+					<Button Content="Заявки"
+							Height="40"
+							Width="160"
+							HorizontalAlignment="Left"
+							HorizontalContentAlignment="Left"
+							VerticalContentAlignment="Center"
+							Background="Transparent"/>
+				</Border>
+			</StackPanel>
+		</Border>
 
-         <!-- Основная область: фильтры + DataGrid -->
-        <Grid Grid.Row="2" Grid.Column="1" RowDefinitions="Auto, *">
-          <!-- Панель фильтров -->
-          <Grid Grid.Row="0" 
-                ColumnDefinitions="*, Auto, Auto, Auto, Auto, Auto, Auto" 
-                Margin="10"
-                RowDefinitions="Auto">
-          
-              <!-- Все фильтры с одинаковой высотой -->
-              <TextBox Grid.Column="0" 
-                       Height="38"
-                       VerticalAlignment="Center"
-                       Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                       Watermark="Поиск по названию / описанию" 
-                       HorizontalContentAlignment="Left"
-                       VerticalContentAlignment="Center"
-                       Margin="0,0,10,0"/>
-          
-              <ComboBox Grid.Column="1" 
-                        Width="120" 
-                        Height="38"
-                        VerticalAlignment="Center"
-                        Margin="0,0,10,0"
-                        ItemsSource="{Binding Statuses}"
-                        SelectedItem="{Binding SelectedStatus}"
-                        PlaceholderText="Статус"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center">
-                  <ComboBox.ItemTemplate>
-                      <DataTemplate>
-                          <TextBlock Text="{Binding Name}"/>
-                      </DataTemplate>
-                  </ComboBox.ItemTemplate>
-              </ComboBox>
-          
-              <ComboBox Grid.Column="2" 
-                        Width="120" 
-                        Height="38"
-                        VerticalAlignment="Center"
-                        Margin="0,0,10,0"
-                        ItemsSource="{Binding Priorities}"
-                        SelectedItem="{Binding SelectedPriority}"
-                        PlaceholderText="Приоритет"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center">
-                  <ComboBox.ItemTemplate>
-                      <DataTemplate>
-                          <TextBlock Text="{Binding Name}"/>
-                      </DataTemplate>
-                  </ComboBox.ItemTemplate>
-              </ComboBox>
-          
-              <ComboBox Grid.Column="3" 
-                        Width="140" 
-                        Height="38"
-                        VerticalAlignment="Center"
-                        Margin="0,0,10,0"
-                        ItemsSource="{Binding Types}"
-                        SelectedItem="{Binding SelectedType}"
-                        PlaceholderText="Тип"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center">
-                  <ComboBox.ItemTemplate>
-                      <DataTemplate>
-                          <TextBlock Text="{Binding Name}"/>
-                      </DataTemplate>
-                  </ComboBox.ItemTemplate>
-              </ComboBox>
-          
-              <ComboBox Grid.Column="4" 
-                        Width="140" 
-                        Height="38"
-                        VerticalAlignment="Center"
-                        Margin="0,0,10,0"
-                        ItemsSource="{Binding Departments}"
-                        SelectedItem="{Binding SelectedDepartment}"
-                        PlaceholderText="Отдел"
-                        HorizontalContentAlignment="Left"
-                        VerticalContentAlignment="Center">
-                  <ComboBox.ItemTemplate>
-                      <DataTemplate>
-                          <TextBlock Text="{Binding Name}"/>
-                      </DataTemplate>
-                  </ComboBox.ItemTemplate>
-              </ComboBox>
-          
-              <!-- Кнопка "Сбросить фильтры" -->
-              <Button Grid.Column="5" 
-                      Height="38"
-                      VerticalAlignment="Center"
-                      HorizontalContentAlignment="Center"
-                      VerticalContentAlignment="Center"
-                      Content="Сбросить фильтры"
-                      Background="#D4B36A" 
-                      Foreground="White"
-                      Command="{Binding ResetFiltersCommand}"
-                      Margin="0,0,10,0"/>
-          
-              <!-- Кнопка "+" Создать заявку -->
-              <Button Grid.Column="6" 
-                      Height="38"
-                      Width="42"
-                      VerticalAlignment="Center"
-                      HorizontalAlignment="Right"
-                      Background="#4CAF50" 
-                      Foreground="White"
-                      FontSize="22"
-                      FontWeight="Bold"
-                      Command="{Binding CreateTicketCommand}"
-                      HorizontalContentAlignment="Center"
-                      VerticalContentAlignment="Center"
-                      Content="+"/>
-          
-          </Grid>
+		<!-- Основная область: фильтры + DataGrid -->
+		<Grid Grid.Row="2" Grid.Column="1" RowDefinitions="Auto, *">
+			<!-- Панель фильтров -->
+			<Grid Grid.Row="0"
+				  ColumnDefinitions="*, Auto, Auto, Auto, Auto, Auto, Auto"
+				  Margin="10"
+				  RowDefinitions="Auto">
 
-          <DataGrid Grid.Row="1" 
-                      ItemsSource="{Binding Tickets}"
-                      AutoGenerateColumns="False" 
-                      IsReadOnly="True"
-                      CanUserResizeColumns="True" 
-                      CanUserSortColumns="True"
-                      Background="#F8F7F5" 
-                      Margin="10,0,10,10">
-            
-                <DataGrid.Styles>
-            
-                    <Style Selector="DataGridColumnHeader">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="FontSize" Value="18"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                    </Style>
-            
-                    <Style Selector="DataGridCell">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    </Style>
-            
-                </DataGrid.Styles>
-            
-                <DataGrid.Columns>
-            
-                    <!-- 👇 главная колонка растягивается -->
-                    <DataGridTextColumn Header="Название"
-                                        Binding="{Binding Title}"
-                                        Width="2*"/>
-            
-                    <!-- 👇 остальные делят место -->
-                    <DataGridTextColumn Header="Тип"
-                                        Binding="{Binding TicketTypeName}"
-                                        Width="*"/>
-            
-                    <DataGridTextColumn Header="Статус"
-                                        Binding="{Binding StatusName}"
-                                        Width="*"/>
-            
-                    <DataGridTextColumn Header="Приоритет"
-                                        Binding="{Binding PriorityName}"
-                                        Width="*"/>
-            
-                    <DataGridTextColumn Header="Отдел"
-                                        Binding="{Binding DepartmentName}"
-                                        Width="*"/>
-            
-                    <DataGridTextColumn Header="Автор"
-                                        Binding="{Binding AuthorName}"
-                                        Width="*"/>
-            
-                    <!-- 👇 кнопки лучше фикс -->
-                    <DataGridTemplateColumn Header="Действия" Width="120">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="✏️" Margin="5,0"
-                                            Command="{Binding $parent[DataGrid].DataContext.EditTicketCommand}"
-                                            CommandParameter="{Binding}"/>
-                                    <Button Content="🗑️" Margin="5,0"
-                                            Command="{Binding $parent[DataGrid].DataContext.DeleteTicketCommand}"
-                                            CommandParameter="{Binding}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-            
-                </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
-    </Grid>
+				<!-- Все фильтры с одинаковой высотой -->
+				<TextBox Grid.Column="0"
+						 Height="38"
+						 VerticalAlignment="Center"
+						 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+						 Watermark="Поиск по названию / описанию"
+						 HorizontalContentAlignment="Left"
+						 VerticalContentAlignment="Center"
+						 Margin="10,0,10,0"/>
+
+				<ComboBox Grid.Column="1"
+						  Width="120"
+						  Height="38"
+						  VerticalAlignment="Center"
+						  Margin="0,0,10,0"
+						  ItemsSource="{Binding Statuses}"
+						  SelectedItem="{Binding SelectedStatus}"
+						  PlaceholderText="Статус"
+						  HorizontalContentAlignment="Left"
+						  VerticalContentAlignment="Center">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+
+				<ComboBox Grid.Column="2"
+						  Width="120"
+						  Height="38"
+						  VerticalAlignment="Center"
+						  Margin="0,0,10,0"
+						  ItemsSource="{Binding Priorities}"
+						  SelectedItem="{Binding SelectedPriority}"
+						  PlaceholderText="Приоритет"
+						  HorizontalContentAlignment="Left"
+						  VerticalContentAlignment="Center">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+
+				<ComboBox Grid.Column="3"
+						  Width="140"
+						  Height="38"
+						  VerticalAlignment="Center"
+						  Margin="0,0,10,0"
+						  ItemsSource="{Binding Types}"
+						  SelectedItem="{Binding SelectedType}"
+						  PlaceholderText="Тип"
+						  HorizontalContentAlignment="Left"
+						  VerticalContentAlignment="Center">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+
+				<ComboBox Grid.Column="4"
+						  Width="140"
+						  Height="38"
+						  VerticalAlignment="Center"
+						  Margin="0,0,10,0"
+						  ItemsSource="{Binding Departments}"
+						  SelectedItem="{Binding SelectedDepartment}"
+						  PlaceholderText="Отдел"
+						  HorizontalContentAlignment="Left"
+						  VerticalContentAlignment="Center">
+					<ComboBox.ItemTemplate>
+						<DataTemplate>
+							<TextBlock Text="{Binding Name}"/>
+						</DataTemplate>
+					</ComboBox.ItemTemplate>
+				</ComboBox>
+
+				<!-- Кнопка "Сбросить фильтры" -->
+				<Button Grid.Column="5"
+						Height="38"
+						VerticalAlignment="Center"
+						HorizontalContentAlignment="Center"
+						VerticalContentAlignment="Center"
+						Content="Сбросить фильтры"
+						Background="#D4B36A"
+						Foreground="White"
+						Command="{Binding ResetFiltersCommand}"
+						Margin="0,0,10,0"/>
+
+				<!-- Кнопка "+" Создать заявку -->
+				<Button Grid.Column="6"
+						Height="38"
+						Width="42"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Right"
+						Background="#4CAF50"
+						Foreground="White"
+						FontSize="22"
+						FontWeight="Bold"
+						Command="{Binding CreateTicketCommand}"
+						HorizontalContentAlignment="Center"
+						VerticalContentAlignment="Center"
+						Content="+"
+						Margin="0,0,10,0"/>
+
+			</Grid>
+
+			<!-- DataGrid -->
+			<DataGrid Grid.Row="1"
+					  ItemsSource="{Binding Tickets}"
+					  AutoGenerateColumns="False"
+					  IsReadOnly="True"
+					  CanUserResizeColumns="True"
+					  CanUserSortColumns="True"
+					  Background="White"
+					  BorderBrush="#E0E0E0"
+					  BorderThickness="1"
+					  CornerRadius="12"
+					  Margin="20,10,20,20"
+					  RowHeight="54"
+					  GridLinesVisibility="None">
+
+				<!-- Стили строк и заголовков -->
+				<DataGrid.Styles>
+					<Style Selector="DataGridRow">
+						<Setter Property="Height" Value="54"/>
+					</Style>
+					<Style Selector="DataGridRow:pointerover">
+						<Setter Property="Background" Value="#F8F7F5"/>
+					</Style>
+					<Style Selector="DataGridRow:selected">
+						<Setter Property="Background" Value="#F0EDE6"/>
+					</Style>
+
+					<!-- Стиль заголовков -->
+					<Style Selector="DataGridColumnHeader">
+						<Setter Property="Background" Value="#F8F7F5"/>
+						<Setter Property="Foreground" Value="#2B2B2B"/>
+						<Setter Property="FontWeight" Value="SemiBold"/>
+						<Setter Property="FontSize" Value="14"/>
+						<Setter Property="Padding" Value="12,10"/>
+						<Setter Property="BorderBrush" Value="#E0E0E0"/>
+						<Setter Property="BorderThickness" Value="0,0,0,1"/>
+					</Style>
+
+					<Style Selector="DataGridColumnHeader TextBlock">
+						<Setter Property="TextAlignment" Value="Center"/>
+						<Setter Property="VerticalAlignment" Value="Center"/>
+					</Style>
+				</DataGrid.Styles>
+
+				<DataGrid.Columns>
+
+					<DataGridTextColumn Header="№"
+										Binding="{Binding Id}"
+										Width="75" />
+
+					<!-- Главная колонка -->
+					<DataGridTextColumn Header="Название заявки"
+										Binding="{Binding Title}"
+										Width="2*"
+										MinWidth="320" />
+
+					<DataGridTextColumn Header="Тип"
+										Binding="{Binding TicketTypeName}"
+										Width="Auto"
+										MinWidth="115" />
+
+					<DataGridTextColumn Header="Статус"
+										Binding="{Binding StatusName}"
+										Width="Auto"
+										MinWidth="115" />
+
+					<DataGridTextColumn Header="Приоритет"
+										Binding="{Binding PriorityName}"
+										Width="Auto"
+										MinWidth="105" />
+
+					<DataGridTextColumn Header="Отдел"
+										Binding="{Binding DepartmentName}"
+										Width="Auto"
+										MinWidth="130" />
+
+					<DataGridTextColumn Header="Автор"
+										Binding="{Binding AuthorName}"
+										Width="Auto"
+										MinWidth="150" />
+
+					<!-- Действия -->
+					<DataGridTemplateColumn Header="Действия" Width="130">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<StackPanel Orientation="Horizontal"
+											HorizontalAlignment="Center"
+											Spacing="8">
+									<Button Content="✏️"
+											ToolTip.Tip="Редактировать"
+											Width="38"
+											Height="38"
+											Background="Transparent"
+											BorderThickness="0"
+											Command="{Binding $parent[DataGrid].DataContext.EditTicketCommand}"
+											CommandParameter="{Binding}"/>
+
+									<Button Content="🗑️"
+											ToolTip.Tip="Удалить"
+											Width="38"
+											Height="38"
+											Background="Transparent"
+											BorderThickness="0"
+											Command="{Binding $parent[DataGrid].DataContext.DeleteTicketCommand}"
+											CommandParameter="{Binding}"/>
+								</StackPanel>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</Grid>
 </UserControl>

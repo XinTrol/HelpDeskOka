@@ -83,7 +83,7 @@
 				<TextBox Grid.Column="0" Height="38"
 						 Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
 						 Watermark="Поиск по названию / описанию"
-						 Margin="0,0,10,0"
+						 Margin="10,0,10,0"
 						 VerticalContentAlignment="Center"/>
 
 				<ComboBox Grid.Column="1" Width="120" Height="38" Margin="0,0,10,0"
@@ -104,15 +104,6 @@
 						  PlaceholderText="Тип"
 						  DisplayMemberBinding="{Binding Name}"/>
 
-				<!-- Remove this if you don't have Departments in VM, or add it -->
-				<!--
-				<ComboBox Grid.Column="4" Width="140" Height="38" Margin="0,0,10,0"
-				ItemsSource="{Binding Departments}"
-				SelectedItem="{Binding SelectedDepartment}"
-				PlaceholderText="Отдел"
-				DisplayMemberBinding="{Binding Name}"/>
-				-->
-
 				<Button Grid.Column="5" Height="38" Content="Сбросить фильтры"
 						Background="#D4B36A" Foreground="White"
 						Command="{Binding ResetFiltersCommand}"
@@ -124,33 +115,108 @@
 						Content="+"
 						HorizontalContentAlignment="Center"
 						VerticalContentAlignment="Center"
-						Command="{Binding CreateTicketCommand}"/>
+						Command="{Binding CreateTicketCommand}"
+						Margin="0,0,10,0"/>
 			</Grid>
 
 			<!-- DataGrid -->
-			<DataGrid Grid.Row="1" ItemsSource="{Binding Tickets}"
+			<DataGrid Grid.Row="1"
+					  ItemsSource="{Binding Tickets}"
 					  AutoGenerateColumns="False"
 					  IsReadOnly="True"
 					  CanUserResizeColumns="True"
 					  CanUserSortColumns="True"
-					  Background="#F8F7F5" Margin="10,0,10,10">
-				<DataGrid.Columns>
-					<DataGridTextColumn Header="Название" Binding="{Binding Title}" Width="*" />
-					<DataGridTextColumn Header="Тип" Binding="{Binding TicketType.Name}" Width="120" />
-					<DataGridTextColumn Header="Статус" Binding="{Binding Status.Name}" Width="100" />
-					<DataGridTextColumn Header="Приоритет" Binding="{Binding Priority.Name}" Width="100" />
-					<DataGridTextColumn Header="Отдел" Binding="{Binding Department.Name}" Width="120" />
-					<DataGridTextColumn Header="Автор" Binding="{Binding Author.ShortName}" Width="150" />
+					  Background="White"
+					  BorderBrush="#E0E0E0"
+					  BorderThickness="1"
+					  CornerRadius="12"
+					  Margin="20,10,20,20"
+					  RowHeight="54"
+					  GridLinesVisibility="None">
 
-					<DataGridTemplateColumn Header="Действия" Width="80">
+				<!-- Стили строк и заголовков -->
+				<DataGrid.Styles>
+					<Style Selector="DataGridRow">
+						<Setter Property="Height" Value="54"/>
+					</Style>
+					<Style Selector="DataGridRow:pointerover">
+						<Setter Property="Background" Value="#F8F7F5"/>
+					</Style>
+					<Style Selector="DataGridRow:selected">
+						<Setter Property="Background" Value="#F0EDE6"/>
+					</Style>
+
+					<!-- Стиль заголовков -->
+					<Style Selector="DataGridColumnHeader">
+						<Setter Property="Background" Value="#F8F7F5"/>
+						<Setter Property="Foreground" Value="#2B2B2B"/>
+						<Setter Property="FontWeight" Value="SemiBold"/>
+						<Setter Property="FontSize" Value="14"/>
+						<Setter Property="Padding" Value="12,10"/>
+						<Setter Property="BorderBrush" Value="#E0E0E0"/>
+						<Setter Property="BorderThickness" Value="0,0,0,1"/>
+					</Style>
+
+					<Style Selector="DataGridColumnHeader TextBlock">
+						<Setter Property="TextAlignment" Value="Center"/>
+						<Setter Property="VerticalAlignment" Value="Center"/>
+					</Style>
+				</DataGrid.Styles>
+
+				<DataGrid.Columns>
+
+					<DataGridTextColumn Header="№"
+										Binding="{Binding Id}"
+										Width="75" />
+
+					<DataGridTextColumn Header="Название заявки"
+										Binding="{Binding Title}"
+										Width="*"
+										MinWidth="320" />
+
+					<DataGridTextColumn Header="Тип"
+										Binding="{Binding TicketType.Name}"
+										Width="Auto"
+										MinWidth="115" />
+
+					<DataGridTextColumn Header="Статус"
+										Binding="{Binding Status.Name}"
+										Width="Auto"
+										MinWidth="115" />
+
+					<DataGridTextColumn Header="Приоритет"
+										Binding="{Binding Priority.Name}"
+										Width="Auto"
+										MinWidth="105" />
+
+					<DataGridTextColumn Header="Отдел"
+										Binding="{Binding Department.Name}"
+										Width="Auto"
+										MinWidth="130" />
+
+					<DataGridTextColumn Header="Автор"
+										Binding="{Binding Author.ShortName}"
+										Width="Auto"
+										MinWidth="150" />
+
+					<!-- Действия -->
+					<DataGridTemplateColumn Header="Действия" Width="92">
 						<DataGridTemplateColumn.CellTemplate>
 							<DataTemplate>
-								<Button Content="✏️" ToolTip.Tip="Редактировать"
+								<Button Content="✏️"
+										ToolTip.Tip="Редактировать"
+										Width="38"
+										Height="38"
+										Background="Transparent"
+										BorderThickness="0"
+										HorizontalAlignment="Center"
+										VerticalAlignment="Center"
 										Command="{Binding $parent[DataGrid].DataContext.EditTicketCommand}"
 										CommandParameter="{Binding}"/>
 							</DataTemplate>
 						</DataGridTemplateColumn.CellTemplate>
 					</DataGridTemplateColumn>
+
 				</DataGrid.Columns>
 			</DataGrid>
 		</Grid>
