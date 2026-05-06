@@ -40,6 +40,9 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AddOrEditUserScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
+[C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AdminAnalyticsView.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
 [C:/Users/egors/OneDrive/Desktop/программирование/C\#/DiplomHelpDeskOka/DiplomHelpDeskOka/Views/Admin/AdminMainScreenView.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 

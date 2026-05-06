@@ -26,6 +26,7 @@
     <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="LiveChartsCore.SkiaSharpView.Avalonia" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -41,6 +42,9 @@
   <ItemGroup>
     <Compile Update="Views\Admin\AddOrEditUserScreenView.axaml.cs">
       <DependentUpon>AddOrEditUserScreenView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Admin\AdminAnalyticsView.axaml.cs">
+      <DependentUpon>AdminAnalyticsView.axaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Admin\AdminTicketsScreenView.axaml.cs">
       <DependentUpon>AdminTicketsScreenView.axaml</DependentUpon>

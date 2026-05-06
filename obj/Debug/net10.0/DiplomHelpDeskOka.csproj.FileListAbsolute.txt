@@ -181,3 +181,7 @@ C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDe
 C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\RBush.dll
 C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\SixLabors.Fonts.dll
 C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\System.IO.Packaging.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\LiveChartsCore.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\LiveChartsCore.SkiaSharpView.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
+C:\Users\egors\OneDrive\Desktop\программирование\C#\DiplomHelpDeskOka\DiplomHelpDeskOka\bin\Debug\net10.0\SkiaSharp.HarfBuzz.dll

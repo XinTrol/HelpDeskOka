@@ -31,6 +31,9 @@ C:\Users\egors\.nuget\packages\documentformat.openxml\3.1.1\lib\net8.0\DocumentF
 C:\Users\egors\.nuget\packages\documentformat.openxml.framework\3.1.1\lib\net8.0\DocumentFormat.OpenXml.Framework.dll
 C:\Users\egors\.nuget\packages\excelnumberformat\1.1.0\lib\netstandard2.0\ExcelNumberFormat.dll
 C:\Users\egors\.nuget\packages\harfbuzzsharp\8.3.1.1\lib\net8.0\HarfBuzzSharp.dll
+C:\Users\egors\.nuget\packages\livechartscore\2.0.0\lib\net8.0\LiveChartsCore.dll
+C:\Users\egors\.nuget\packages\livechartscore.skiasharpview.avalonia\2.0.0\lib\net8.0\LiveChartsCore.SkiaSharpView.Avalonia.dll
+C:\Users\egors\.nuget\packages\livechartscore.skiasharpview\2.0.0\lib\net8.0\LiveChartsCore.SkiaSharpView.dll
 C:\Users\egors\.nuget\packages\microcom.runtime\0.11.0\lib\net5.0\MicroCom.Runtime.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.7\ref\net10.0\Microsoft.CSharp.dll
 C:\Users\egors\.nuget\packages\microsoft.entityframeworkcore.abstractions\10.0.5\lib\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -56,6 +59,7 @@ C:\Users\egors\.nuget\packages\npgsql.entityframeworkcore.postgresql\10.0.1\lib\
 C:\Users\egors\.nuget\packages\rbush.signed\4.0.0\lib\net8.0\RBush.dll
 C:\Users\egors\.nuget\packages\sixlabors.fonts\1.0.0\lib\netcoreapp3.1\SixLabors.Fonts.dll
 C:\Users\egors\.nuget\packages\skiasharp\2.88.9\lib\net6.0\SkiaSharp.dll
+C:\Users\egors\.nuget\packages\skiasharp.harfbuzz\2.88.9\lib\net6.0\SkiaSharp.HarfBuzz.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.7\ref\net10.0\System.AppContext.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.7\ref\net10.0\System.Buffers.dll
 C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\10.0.7\ref\net10.0\System.Collections.Concurrent.dll

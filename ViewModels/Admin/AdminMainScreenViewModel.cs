@@ -286,6 +286,13 @@ namespace DiplomHelpDeskOka.ViewModels
         public void GoToUsers() => MainWindowViewModel.Instance.CurrentViewModel = new AdminUsersScreenViewModel(CurrentUser);
 
         [RelayCommand]
+        private void GoToAnalytics()
+        {
+            MainWindowViewModel.Instance.CurrentViewModel =
+                new AdminAnalyticsViewModel(CurrentUser);   // ← ViewModel остаётся
+        }
+
+        [RelayCommand]
         public void GoToTicketsScreen() => MainWindowViewModel.Instance.CurrentViewModel = new AdminTicketsScreenViewModel(CurrentUser);
 
         [RelayCommand]

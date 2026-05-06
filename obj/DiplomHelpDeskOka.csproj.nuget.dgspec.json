@@ -89,6 +89,10 @@
               "target": "Package",
               "version": "[8.2.1, )"
             },
+            "LiveChartsCore.SkiaSharpView.Avalonia": {
+              "target": "Package",
+              "version": "[2.0.0, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[10.0.5, )"

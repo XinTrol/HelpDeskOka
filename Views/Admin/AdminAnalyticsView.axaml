@@ -1,0 +1,148 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.Avalonia;assembly=LiveChartsCore.SkiaSharpView.Avalonia"
+			 mc:Ignorable="d" d:DesignWidth="1280" d:DesignHeight="900"
+			 x:Class="DiplomHelpDeskOka.Views.AdminAnalyticsView"
+			 xmlns:vm="clr-namespace:DiplomHelpDeskOka.ViewModels"
+			 x:DataType="vm:AdminAnalyticsViewModel">
+
+	<Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="200,*">
+
+		<!-- Header -->
+		<Border Grid.Row="0" Grid.ColumnSpan="2" Background="White" Height="70" Padding="20,10">
+			<Grid ColumnDefinitions="Auto,*,Auto">
+				<Image Source="/Assets/Image.png" Height="40"/>
+				<StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+					<StackPanel>
+						<TextBlock Text="{Binding CurrentUser.ShortName}" FontWeight="SemiBold"/>
+						<TextBlock Text="{Binding CurrentUser.Role.Name}" FontSize="12" Foreground="#666"/>
+					</StackPanel>
+					<Button Content="Выйти" Command="{Binding LogoutCommand}" Background="#D9534F" Foreground="White"/>
+				</StackPanel>
+			</Grid>
+		</Border>
+
+		<!-- Golden Bar -->
+		<Border Grid.Row="1" Grid.ColumnSpan="2" Background="#C9A86A" Height="64" Padding="20,0">
+			<Grid ColumnDefinitions="200,*,Auto">
+				<TextBlock Text="Аналитика" FontSize="19" FontWeight="Bold" Foreground="White" VerticalAlignment="Center"/>
+
+				<ComboBox Grid.Column="2" Width="180" Height="38"
+						  SelectedIndex="{Binding SelectedPeriodIndex}"
+						  VerticalAlignment="Center">
+					<ComboBoxItem Content="За неделю"/>
+					<ComboBoxItem Content="За месяц"/>
+					<ComboBoxItem Content="За 3 месяца"/>
+					<ComboBoxItem Content="За год"/>
+				</ComboBox>
+			</Grid>
+		</Border>
+
+		<!-- Sidebar -->
+		<Border Grid.Row="2" Grid.Column="0" Background="#F1EFEA" Padding="12">
+			<StackPanel Spacing="8">
+				<Button Content="Главная" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+						Height="40" Width="160" HorizontalAlignment="Left" Background="Transparent" Command="{Binding GoToMainCommand}"/>
+				<Button Content="Пользователи" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+						Height="40" Width="160" HorizontalAlignment="Left" Background="Transparent" Command="{Binding GoToUsersCommand}"/>
+				<Button Content="Заявки" Height="40" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+						Width="160" HorizontalAlignment="Left" Background="Transparent" Command="{Binding GoToTicketsCommand}"/>
+
+				<Border Background="Transparent" Padding="10" BorderBrush="#C9A86A" BorderThickness="3,0,0,0">
+					<Button Content="Аналитика" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" 
+							Height="40" Width="160" HorizontalAlignment="Left" Background="Transparent" FontWeight="Medium"/>
+				</Border>
+			</StackPanel>
+		</Border>
+
+		<!-- Main Content -->
+        <ScrollViewer Grid.Row="2" Grid.Column="1"
+                      Padding="28"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Background="#F8F7F5">
+
+            <StackPanel Spacing="28" Margin="0,0,0,60">
+
+                <!-- KPI -->
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                    <Border Background="White" CornerRadius="12" Padding="20" Width="240">
+                        <StackPanel>
+                            <TextBlock Text="Всего заявок" FontSize="14" Foreground="#666"/>
+                            <TextBlock Text="{Binding TotalTickets}" FontSize="32" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="12" Padding="20" Width="240">
+                        <StackPanel>
+                            <TextBlock Text="Среднее время закрытия" FontSize="14" Foreground="#666"/>
+                            <TextBlock Text="{Binding AvgCloseTimeDays, StringFormat={}{0} дней}" 
+                                       FontSize="32" FontWeight="Bold"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="12" Padding="20" Width="240">
+                        <StackPanel>
+                            <TextBlock Text="Просрочено" FontSize="14" Foreground="#666"/>
+                            <TextBlock Text="{Binding OverduePercent, StringFormat={}{0}%}" 
+                                       FontSize="32" FontWeight="Bold" Foreground="#D9534F"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Background="White" CornerRadius="12" Padding="20" Width="240">
+                        <StackPanel>
+                            <TextBlock Text="Закрыто в срок" FontSize="14" Foreground="#666"/>
+                            <TextBlock Text="{Binding OnTimePercent, StringFormat={}{0}%}" 
+                                       FontSize="32" FontWeight="Bold" Foreground="#2E9B5F"/>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- Графики -->
+                <Grid ColumnDefinitions="*,*">
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="22" Margin="0,0,14,0">
+                        <StackPanel>
+                            <TextBlock Text="Динамика заявок" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,14"/>
+                            <lvc:CartesianChart Height="380" 
+                                                Series="{Binding TicketsTrendSeries}"
+                                                XAxes="{Binding XAxes}"
+                                                YAxes="{Binding YAxes}"
+                                                LegendPosition="Right"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="22" Margin="14,0,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Заявки по отделам" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,14"/>
+                            <lvc:CartesianChart Height="380" 
+                                                Series="{Binding DepartmentSeries}"
+                                                XAxes="{Binding DepartmentXAxes}"
+                                                LegendPosition="Right"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*">
+                    <Border Grid.Column="0" Background="White" CornerRadius="12" Padding="22" Margin="0,0,14,0">
+                        <StackPanel>
+                            <TextBlock Text="Среднее время реакции по отделам" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,14"/>
+                            <lvc:CartesianChart Height="380" 
+                                                Series="{Binding ResponseTimeSeries}"
+                                                LegendPosition="Right"/>
+                        </StackPanel>
+                    </Border>
+
+                    <Border Grid.Column="1" Background="White" CornerRadius="12" Padding="22" Margin="14,0,0,0">
+                        <StackPanel>
+                            <TextBlock Text="Распределение по статусам" FontSize="18" FontWeight="SemiBold" Margin="0,0,0,14"/>
+                            <lvc:PieChart Height="380" Series="{Binding StatusPieSeries}"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>
